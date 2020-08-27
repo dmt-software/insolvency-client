@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.rechtspraak.nl/namespaces/inspubber01" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.rechtspraak.nl/namespaces/inspubber01" elementFormDefault="qualified" attributeFormDefault="unqualified" version="01.03">
+	<!--A literal translation of legal terms  in insolvency cases carries  - because of differences between national procedures - a risk of misinterpretation. 
+To be able to contextualize the terminology in this schema, use can made of the English description of the Dutch insolvency procedures on the website of the European Judicial network in civil and commercial matters ( http://ec.europa.eu/civiljustice/ ). 
+To avoid misunderstandings all Dutch terms (in the documentation-elements) have been translated - as fas as possible - using this website. -->
+	<xs:simpleType name="exceptieCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Geen resultaten gevonden</xs:documentation>
+					<xs:documentation xml:lang="en">No results found</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Technische fout in de afhandeling van de request</xs:documentation>
+					<xs:documentation xml:lang="en">Technical error while handling the request</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Te veel resultaten gevonden. Beperk de zoekvraag</xs:documentation>
+					<xs:documentation xml:lang="en">To many results. Limit your search</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Input niet correct. Raadpleeg de handleiding.</xs:documentation>
+					<xs:documentation xml:lang="en">Incorrect input. Consult the manual.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Er kan niet worden gegarandeerd dat de gevraagde bestanden goed aansluiten. U dient een nieuw historie-bestand te downloaden. Raadpleeg de handleiding.</xs:documentation>
+					<xs:documentation xml:lang="en">It can not be garantueed that the requested records fit correctly for synchronization pruposes. You have to download a new history-file. Consult the manual.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPublicatiekenmerk">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]{2}\.){0,1}[a-z]{3}\.[0-9]{2}\.[0-9]{1,4}\.[F|S|R]\.[0-9]{4}\.[0-9]{1,2}\.[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="publicatieLijst">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="exceptie">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="errorcode" type="exceptieCode" use="required"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="publicatieKenmerk" type="inspubPublicatiekenmerk" maxOccurs="unbounded"/>
+			</xs:choice>
+			<xs:attribute name="extractiedatum" type="xs:dateTime" use="required"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

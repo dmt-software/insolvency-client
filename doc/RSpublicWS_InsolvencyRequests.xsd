@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="01.04">
+	<!--A literal translation of legal terms  in insolvency cases carries  - because of differences between national procedures - a risk of misinterpretation. 
+To be able to contextualize the terminology in this schema, use can made of the English description of the Dutch insolvency procedures on the website of the European Judicial network in civil and commercial matters ( http://ec.europa.eu/civiljustice/ ). 
+To avoid misunderstandings all Dutch terms (in the documentation-elements) have been translated - as fas as possible - using this website. -->
+	<xs:simpleType name="inspubPersoonAchternaam">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPersoonVoorvoegsel">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="instantieRechtbankCode">
+		<xs:union memberTypes="instantieRechtbankCodePreHGK instantieRechtbankCodeHGK"/>
+	</xs:simpleType>
+	<xs:simpleType name="instantieRechtbankCodeHGK">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="40">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Amsterdam</xs:documentation>
+					<xs:documentation xml:lang="en">Amsterdam</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Noord-Holland</xs:documentation>
+					<xs:documentation xml:lang="en">Noord-Holland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42">
+				<xs:annotation>
+					<xs:documentation>Midden-Nederland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Noord-Nederland</xs:documentation>
+					<xs:documentation xml:lang="en">Noord-Nederland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Oost-Nederland</xs:documentation>
+					<xs:documentation xml:lang="en">Oost-Nederland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Den Haag</xs:documentation>
+					<xs:documentation xml:lang="en">Den Haag</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Rotterdam</xs:documentation>
+					<xs:documentation xml:lang="en">Rotterdam</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="47">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Limburg</xs:documentation>
+					<xs:documentation xml:lang="en">Limburg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="48">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Oost-Brabant</xs:documentation>
+					<xs:documentation xml:lang="en">Oost-Brabant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="49">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Zeeland-West-Brabant</xs:documentation>
+					<xs:documentation xml:lang="en">Zeeland-West-Brabant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Gelderland</xs:documentation>
+					<xs:documentation xml:lang="en">Gelderland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="51">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Overijssel</xs:documentation>
+					<xs:documentation xml:lang="en">Overijssel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="instantieRechtbankCodePreHGK">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">'s-Hertogenbosch</xs:documentation>
+					<xs:documentation xml:lang="en">'s-Hertogenbosch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Breda</xs:documentation>
+					<xs:documentation xml:lang="en">Breda</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Maastricht</xs:documentation>
+					<xs:documentation xml:lang="en">Maastricht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Roermond</xs:documentation>
+					<xs:documentation xml:lang="en">Roermond</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="05">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Arnhem</xs:documentation>
+					<xs:documentation xml:lang="en">Arnhem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="06">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Zutphen</xs:documentation>
+					<xs:documentation xml:lang="en">Zutphen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="07">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Zwolle-Lelystad</xs:documentation>
+					<xs:documentation xml:lang="en">Zwolle-Lelystad</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="08">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Almelo</xs:documentation>
+					<xs:documentation xml:lang="en">Almelo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="09">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">'s-Gravenhage</xs:documentation>
+					<xs:documentation xml:lang="en">'s-Gravenhage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Rotterdam</xs:documentation>
+					<xs:documentation xml:lang="en">Rotterdam</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Dordrecht</xs:documentation>
+					<xs:documentation xml:lang="en">Dordrecht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Middelburg</xs:documentation>
+					<xs:documentation xml:lang="en">Middelburg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Amsterdam</xs:documentation>
+					<xs:documentation xml:lang="en">Amsterdam</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="14">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Alkmaar</xs:documentation>
+					<xs:documentation xml:lang="en">Alkmaar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Haarlem</xs:documentation>
+					<xs:documentation xml:lang="en">Haarlem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="16">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Utrecht</xs:documentation>
+					<xs:documentation xml:lang="en">Utrecht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="17">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Leeuwarden</xs:documentation>
+					<xs:documentation xml:lang="en">Leeuwarden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="18">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Groningen</xs:documentation>
+					<xs:documentation xml:lang="en">Groningen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="19">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Assen</xs:documentation>
+					<xs:documentation xml:lang="en">Assen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="persoonGeboortedatum">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="inspubAdresPostcode">
+		<xs:restriction base="xs:string">
+			<xs:length value="6"/>
+			<xs:pattern value="[1-9][0-9]{3}[A-Z]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubAdresHuisnummer">
+		<xs:restriction base="xs:positiveInteger"/>
+	</xs:simpleType>
+	<xs:simpleType name="inspubHandelsnaam">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KvKNummer">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{5,8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPublicatiekenmerk">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]{2}\.){0,1}[a-z]{3}\.[0-9]{2}\.[0-9]{1,4}\.[F|S|R]\.[0-9]{4}\.[0-9]{1,2}\.[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubInsolventienummer">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[F|S|R]\.(\d{2}/){0,1}\d{2}/\d{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="getCase">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="publicationNumber" type="inspubPublicatiekenmerk"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchByDate">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="date" type="xs:dateTime"/>
+				<xs:element name="court" type="instantieRechtbankCode"/>
+				<xs:element name="pubType" minOccurs="0" maxOccurs="7">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Uitspraken faillissement">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Rulings on the commencement of bankruptcy procedures</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="Uitspraken schuldsanering">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Rulings on the commencement of procedures on debt restucturing</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="Uitspraken surseance">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Rulings on the commencement of procedures on moratorium</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="Einde faillissementen">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Rulings on the termination of bankruptcy procedures</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="Einde schuldsaneringen">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Rulings on the termination of procedures on  debt restucturing</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="Einde surseances">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Rulings on the termination of moratorium</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="Overig">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Other insolvency publications</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchInsolvencyID">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="insolvencyID" type="inspubInsolventienummer"/>
+				<xs:element name="court" type="instantieRechtbankCode" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchModifiedSince">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="modifyDate" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchNaturalPerson">
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="dateOfBirth" type="persoonGeboortedatum"/>
+					<xs:choice>
+						<xs:sequence>
+							<xs:element name="prefix" type="inspubPersoonVoorvoegsel" minOccurs="0"/>
+							<xs:element name="surname" type="inspubPersoonAchternaam"/>
+						</xs:sequence>
+						<xs:sequence>
+							<xs:element name="houseNumber" type="inspubAdresHuisnummer"/>
+							<xs:element name="postalCode" type="inspubAdresPostcode"/>
+						</xs:sequence>
+					</xs:choice>
+				</xs:sequence>
+				<xs:sequence>
+					<xs:sequence>
+						<xs:element name="prefix" type="inspubPersoonVoorvoegsel" minOccurs="0"/>
+						<xs:element name="surname" type="inspubPersoonAchternaam"/>
+					</xs:sequence>
+					<xs:sequence>
+						<xs:element name="houseNumber" type="inspubAdresHuisnummer"/>
+						<xs:element name="postalCode" type="inspubAdresPostcode"/>
+					</xs:sequence>
+				</xs:sequence>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchUndertaking">
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="name" type="inspubHandelsnaam"/>
+						<xs:element name="commercialRegisterID" type="KvKNummer"/>
+					</xs:choice>
+					<xs:element name="postalCode" type="inspubAdresPostcode" minOccurs="0"/>
+					<xs:element name="houseNumber" type="inspubAdresHuisnummer" minOccurs="0"/>
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element name="name" type="inspubHandelsnaam"/>
+					<xs:element name="commercialRegisterID" type="KvKNummer"/>
+					<xs:element name="postalCode" type="inspubAdresPostcode" minOccurs="0"/>
+					<xs:element name="houseNumber" type="inspubAdresHuisnummer" minOccurs="0"/>
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element name="postalCode" type="inspubAdresPostcode"/>
+					<xs:element name="houseNumber" type="inspubAdresHuisnummer"/>
+				</xs:sequence>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

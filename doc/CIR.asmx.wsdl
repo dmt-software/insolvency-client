@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.rechtspraak.nl/namespaces/cir01" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://www.rechtspraak.nl/namespaces/cir01" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.rechtspraak.nl/namespaces/cir01">
+      <s:element name="searchByDate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="court" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pubType" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="searchByDateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="searchByDateResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchInsolvencyID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="insolvencyID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="court" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchInsolvencyIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="searchInsolvencyIDResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchNaturalPerson">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="prefix" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="surname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dateOfBirth" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="postalCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="houseNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchNaturalPersonResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="searchNaturalPersonResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchUndertaking">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="commercialRegisterID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="postalCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="houseNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchUndertakingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="searchUndertakingResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchModifiedSince">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="modifyDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchModifiedSinceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="searchModifiedSinceResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchRemovedSince">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="modifyDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchRemovedSinceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="searchRemovedSinceResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCase">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="publicationNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCaseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getCaseResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLastUpdate">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetLastUpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLastUpdateResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchReportsSince">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="datetimeFrom" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="datetimeTo" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="searchReportsSinceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="searchReportsSinceResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCaseWithReports">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="publicationNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCaseWithReportsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getCaseWithReportsResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="searchByDateSoapIn">
+    <wsdl:part name="parameters" element="tns:searchByDate" />
+  </wsdl:message>
+  <wsdl:message name="searchByDateSoapOut">
+    <wsdl:part name="parameters" element="tns:searchByDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchInsolvencyIDSoapIn">
+    <wsdl:part name="parameters" element="tns:searchInsolvencyID" />
+  </wsdl:message>
+  <wsdl:message name="searchInsolvencyIDSoapOut">
+    <wsdl:part name="parameters" element="tns:searchInsolvencyIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchNaturalPersonSoapIn">
+    <wsdl:part name="parameters" element="tns:searchNaturalPerson" />
+  </wsdl:message>
+  <wsdl:message name="searchNaturalPersonSoapOut">
+    <wsdl:part name="parameters" element="tns:searchNaturalPersonResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchUndertakingSoapIn">
+    <wsdl:part name="parameters" element="tns:searchUndertaking" />
+  </wsdl:message>
+  <wsdl:message name="searchUndertakingSoapOut">
+    <wsdl:part name="parameters" element="tns:searchUndertakingResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchModifiedSinceSoapIn">
+    <wsdl:part name="parameters" element="tns:searchModifiedSince" />
+  </wsdl:message>
+  <wsdl:message name="searchModifiedSinceSoapOut">
+    <wsdl:part name="parameters" element="tns:searchModifiedSinceResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchRemovedSinceSoapIn">
+    <wsdl:part name="parameters" element="tns:searchRemovedSince" />
+  </wsdl:message>
+  <wsdl:message name="searchRemovedSinceSoapOut">
+    <wsdl:part name="parameters" element="tns:searchRemovedSinceResponse" />
+  </wsdl:message>
+  <wsdl:message name="getCaseSoapIn">
+    <wsdl:part name="parameters" element="tns:getCase" />
+  </wsdl:message>
+  <wsdl:message name="getCaseSoapOut">
+    <wsdl:part name="parameters" element="tns:getCaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLastUpdateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLastUpdate" />
+  </wsdl:message>
+  <wsdl:message name="GetLastUpdateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLastUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchReportsSinceSoapIn">
+    <wsdl:part name="parameters" element="tns:searchReportsSince" />
+  </wsdl:message>
+  <wsdl:message name="searchReportsSinceSoapOut">
+    <wsdl:part name="parameters" element="tns:searchReportsSinceResponse" />
+  </wsdl:message>
+  <wsdl:message name="getCaseWithReportsSoapIn">
+    <wsdl:part name="parameters" element="tns:getCaseWithReports" />
+  </wsdl:message>
+  <wsdl:message name="getCaseWithReportsSoapOut">
+    <wsdl:part name="parameters" element="tns:getCaseWithReportsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="CIRSoap">
+    <wsdl:operation name="searchByDate">
+      <wsdl:input message="tns:searchByDateSoapIn" />
+      <wsdl:output message="tns:searchByDateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="searchInsolvencyID">
+      <wsdl:input message="tns:searchInsolvencyIDSoapIn" />
+      <wsdl:output message="tns:searchInsolvencyIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="searchNaturalPerson">
+      <wsdl:input message="tns:searchNaturalPersonSoapIn" />
+      <wsdl:output message="tns:searchNaturalPersonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="searchUndertaking">
+      <wsdl:input message="tns:searchUndertakingSoapIn" />
+      <wsdl:output message="tns:searchUndertakingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="searchModifiedSince">
+      <wsdl:input message="tns:searchModifiedSinceSoapIn" />
+      <wsdl:output message="tns:searchModifiedSinceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="searchRemovedSince">
+      <wsdl:input message="tns:searchRemovedSinceSoapIn" />
+      <wsdl:output message="tns:searchRemovedSinceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getCase">
+      <wsdl:input message="tns:getCaseSoapIn" />
+      <wsdl:output message="tns:getCaseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastUpdate">
+      <wsdl:input message="tns:GetLastUpdateSoapIn" />
+      <wsdl:output message="tns:GetLastUpdateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="searchReportsSince">
+      <wsdl:input message="tns:searchReportsSinceSoapIn" />
+      <wsdl:output message="tns:searchReportsSinceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getCaseWithReports">
+      <wsdl:input message="tns:getCaseWithReportsSoapIn" />
+      <wsdl:output message="tns:getCaseWithReportsSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CIRSoap" type="tns:CIRSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="searchByDate">
+      <soap:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchByDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchInsolvencyID">
+      <soap:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchInsolvencyID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchNaturalPerson">
+      <soap:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchNaturalPerson" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchUndertaking">
+      <soap:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchUndertaking" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchModifiedSince">
+      <soap:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchModifiedSince" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchRemovedSince">
+      <soap:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchRemovedSince" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCase">
+      <soap:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/getCase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastUpdate">
+      <soap:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/GetLastUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchReportsSince">
+      <soap:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchReportsSince" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCaseWithReports">
+      <soap:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/getCaseWithReports" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CIRSoap12" type="tns:CIRSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="searchByDate">
+      <soap12:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchByDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchInsolvencyID">
+      <soap12:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchInsolvencyID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchNaturalPerson">
+      <soap12:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchNaturalPerson" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchUndertaking">
+      <soap12:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchUndertaking" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchModifiedSince">
+      <soap12:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchModifiedSince" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchRemovedSince">
+      <soap12:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchRemovedSince" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCase">
+      <soap12:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/getCase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastUpdate">
+      <soap12:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/GetLastUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchReportsSince">
+      <soap12:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/searchReportsSince" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCaseWithReports">
+      <soap12:operation soapAction="http://www.rechtspraak.nl/namespaces/cir01/getCaseWithReports" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CIR">
+    <wsdl:port name="CIRSoap" binding="tns:CIRSoap">
+      <soap:address location="https://webservice.rechtspraak.nl/cir.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CIRSoap12" binding="tns:CIRSoap12">
+      <soap12:address location="https://webservice.rechtspraak.nl/cir.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

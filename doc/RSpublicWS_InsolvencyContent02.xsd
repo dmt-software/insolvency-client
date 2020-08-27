@@ -1,0 +1,1418 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.rechtspraak.nl/namespaces/inspubber01" targetNamespace="http://www.rechtspraak.nl/namespaces/inspubber01" elementFormDefault="qualified" attributeFormDefault="unqualified" version="02.01">
+	<!--A literal translation of legal terms  in insolvency cases carries  - because of differences between national procedures - a risk of misinterpretation. 
+To be able to contextualize the terminology in this schema, use can made of the English description of the Dutch insolvency procedures on the website of the European Judicial network in civil and commercial matters ( http://ec.europa.eu/civiljustice/ ). 
+To avoid misunderstandings all Dutch terms (in the documentation-elements) have been translated - as fas as possible - using this website. -->
+	<xs:simpleType name="adresHuisnummerBezoekadres">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">AddressHousenumberVisiting address</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="datumBegin">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">dateStart</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="datumEind">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">dateEnd</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="datumPublicatie">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">dateOfPublication</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="exceptieCode">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">ExceptionCode</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Geen resultaten gevonden</xs:documentation>
+					<xs:documentation xml:lang="en">No results found</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Technische fout in de afhandeling van de request</xs:documentation>
+					<xs:documentation xml:lang="en">Technical error while handling the request</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Te veel resultaten gevonden. Beperk de zoekvraag</xs:documentation>
+					<xs:documentation xml:lang="en">To many results. Limit your search</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Input niet correct. Raadpleeg de handleiding.</xs:documentation>
+					<xs:documentation xml:lang="en">Incorrect input. Consult the manual.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Er kan niet worden gegarandeerd dat de gevraagde bestanden goed aansluiten. U dient een nieuw historie-bestand te downloaden. Raadpleeg de handleiding.</xs:documentation>
+					<xs:documentation xml:lang="en">It can not be garantueed that the requested records fit correctly for synchronization pruposes. You have to download a new history-file. Consult the manual.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ID">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">ID</xs:documentation>
+			<xs:documentation xml:lang="en">ID</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger"/>
+	</xs:simpleType>
+	<xs:simpleType name="inspubAdresHuisnummer">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">INSPUB = insolvency publications. Address HouseNumber</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger"/>
+	</xs:simpleType>
+	<xs:simpleType name="inspubAdresHuisnummerToevoeging1">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Address HouseNumber Suffix1</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubAdresHuisnummerToevoeging2">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Address HouseNumber Suffix2</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubAdresPlaats">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Address Town</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubAdresPostcode">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Address Postal Code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="6"/>
+			<xs:pattern value="[1-9][0-9]{3}[A-Z]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubAdresStraat">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Address Street</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubAdresTelefoon">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Adress Telephone</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubAdresType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Adress Type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+			<xs:enumeration value="WOON">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Woonadres</xs:documentation>
+					<xs:documentation xml:lang="en">residential address </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VEST">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Vestigingsadres</xs:documentation>
+					<xs:documentation xml:lang="en">Business address</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CORR">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Correspondentieadres</xs:documentation>
+					<xs:documentation xml:lang="en">Postal address</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VRHN">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Voorheen</xs:documentation>
+					<xs:documentation xml:lang="en">formerly</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PBAV">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Aanvullende postblokkade</xs:documentation>
+					<xs:documentation xml:lang="en">additional mail blockade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PBTI">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Tussentijdse intrekking postblokkade</xs:documentation>
+					<xs:documentation xml:lang="en">interim abrogation mail blockade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubCbvCB">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">CBV = Curator / bewindvoerder </xs:documentation>
+			<xs:documentation xml:lang="en">CBV = Administrator / Receiver </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:enumeration value="C">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Curator</xs:documentation>
+					<xs:documentation xml:lang="en">Administrator (bankruptcy)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Bewindvoerder</xs:documentation>
+					<xs:documentation xml:lang="en">Receiver (debt restructuring or mortuarium procedure) </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubCbvVoorletters">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Cbv Initials</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubCbvVoorvoegsel">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Cbv middle part name (e.g. 'van' in 'Marc van Opijnen') </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubCbvAchternaam">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Cbv family name</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubCbvTitel">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Cbv academic title</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubDatumRekEnVerantw">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Datum waarop rekening en verantwoording is afgelegd</xs:documentation>
+			<xs:documentation xml:lang="en">Date by which render and account has been done</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="inspubEindeVindbaarheid">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Datum waarmee wordt aangegeven na welke datum informatie over deze insolventie, op grond van de privacywetgeving, niet meer mag worden ontsloten. </xs:documentation>
+			<xs:documentation xml:lang="en">Date by which information on the insolvency can not be disseminated anymore, due to privacy laws</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="inspubGeheimAdres">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Geheim adres. Iindien deze indicator TRUE is, zullen verder geen adresgegevens zijn opgenomen.</xs:documentation>
+			<xs:documentation xml:lang="en">undisclosed address. If this indicator is TRUE, no address is supplied</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean">
+			<xs:pattern value="true|false"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubHandelsnaam">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">business name</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubHandelsnaamVoorheen">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Voormalige handelsnaam. TRUE indien de handelsnaam thans niet meer in het actieve economische verkeer wordt gevoerd.</xs:documentation>
+			<xs:documentation xml:lang="en">former business name. TRUE if business name is not used any more</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean">
+			<xs:pattern value="true|false"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubInsolventienummer">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Zaaknummer.</xs:documentation>
+			<xs:documentation xml:lang="en">Case number.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[F|S|R]\.(\d{2}/){0,1}\d{2}/\d{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubInstroomLegacy">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Indien TRUE dan is de insolventie gestart voor 1 januari 2005 en niet alle publicaties over deze insolventie zijn dan in het register aanwezig. </xs:documentation>
+			<xs:documentation xml:lang="en">If TRUE: the insolvency started before 01-01-2005 and not all publications in this case are within this register.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean">
+			<xs:pattern value="true|false"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubIspreHGKGepubliceerd">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Een indicatie of de insolventie voor invoering van HGK is gepubliceerd. Indien TRUE dan is het preHGKInsolventieNummer naast het insolventienummer een relevant communicatiegegeven.</xs:documentation>
+			<xs:documentation xml:lang="en">Indicates that an insolvency has been published before the introduction of the new district court structure. If TRUE then apart from the insolventienummer the preHGKInsolventieNummer is relevant in communication.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean">
+			<xs:pattern value="true|false"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubLandNaam">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Country</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPersoonAchternaam">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">person Family name</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPersoonVoorvoegsel">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">middle part name (e.g. 'van' in M. van Opijnen) </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPersoonVoorletters">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Person initials</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPersoonVoornaam">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Person first name</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPersoonGeboorteplaats">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Person place of birth</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubpreHGKInsolventieNummer">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Insolventienummer in het formaat zoals gebruikt tot 01-01-2013 (ingang HGK).</xs:documentation>
+			<xs:documentation xml:lang="en">Case number in the format as used until 01-01-2013 (restructuring of court districts).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[F|S|R]\.\d{2}/\d{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPublicatiekenmerk">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">uniek nummer dat wordt toegekend bij publicatie van de bekendmaking. Eerste twee cijfers (optioneel) staan voor het systeemnummer. De eerste drie letters staan voor gerecht, daarna volgt insolventienummer in aangepaste volgorde (jaartal, volgnummer, soort (F = Faillissement, S = surseance = R = schuldsanering)), daarna viercijferige code voor publicatiesoort (zie ook element 'publicatieSoortCode'), een volgnummer voor deze publicatiesoort bij deze insolventie, en ten slotte een tweecijferige code voor het jaartal van publicatie.  </xs:documentation>
+			<xs:documentation xml:lang="en">Unique identification number which is assigned on publication. The first two numbers (optional) are a systemscode. The first three letters are a court code, followed by  the insolvency number in an adapted sequence (year, serial number, kind of procedure (F = Bankruptcy, S = Mortuarium, R = debt restructuring)), followed by a code for the kind of publication (four digits - see the documentation at 'publicatieSoortCode'), a sequence number for this kind of publication within this insolvency-case and finally a two digit code for the year of publication.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]{2}\.){0,1}[a-z]{3}\.[0-9]{2}\.[0-9]{1,4}\.[F|S|R]\.[0-9]{4}\.[0-9]{1,2}\.[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPublicatieOmschrijving">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">publication description</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="400"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPublicatieOmschrijvingVerlengd">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">publication description - used in case the text is very long</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="inspubPublicatiesoortCode">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">kind of publication - code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1200">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak faillissement in cassatie op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">declaration of bankruptcy in cassation proceedings on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1201">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">faillissement van rechtswege door tussentijdse beëindiging schuldsanering in cassatie op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">bankruptcy de jure as result of interim termination of debt restructuring in cassation on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1202">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vernietiging faillissement in cassatie op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">nullification of bankruptcy in cassation on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2200">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak schuldsanering in cassatie op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">admission to debt restructuring in cassation on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2201">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">omzetting faillissement in schuldsanering in cassatie op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">conversion of bankruptcy into debt restructuring in cassation on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2202">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">herleving schuldsanering door vernietiging faillissement in cassatie op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">resurgence of debt restructuring because of nullification of bankruptcy in cassation on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3200">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verlening definitieve surseance in cassatie op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">Granting of final moratorium  in cassation on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3201">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">behandeling cassatieberoep bij de hoge raad tegen afwijzing definitieve surseance op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">proceedings on appeal to the Supreme Court on rejection of final admission to moratorium on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3202">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">behandeling cassatieberoep tegen toewijzing definitieve surseance op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">proceedings on appeal to the Supreme Court  on final admission to moratorium on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1100">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak faillissement in hoger beroep op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">declaration of bankruptcy in appeal on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1101">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">faillissement van rechtswege door tussentijdse beëindiging schuldsanering in hoger beroep op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">bankruptcy de jure as result of interim termination of debt restructuring in appeal on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1102">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vernietiging faillissement in hoger beroep op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">nullification of bankruptcy in appeal on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2100">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak schuldsanering in hoger beroep op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">admission to debt restructuring in appeal on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2101">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">omzetting faillissement in schuldsanering in hoger beroep op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">conversion of bankruptcy into debt restructuring in appeal on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2102">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">herleving schuldsanering door vernietiging faillissement in hoger beroep op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">resurgence of  debt restructuring because of nullification of bankruptcy in appeal on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3100">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verlening definitieve surseance in hoger beroep op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">final admission to moratorium in appeal on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3101">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">behandeling hoger beroep tegen afwijzing definitieve surseance op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">hearing court of appeal on rejection of final admission to moratorium on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3102">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">behandeling hoger beroep tegen toewijzing definitieve surseance op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">hearing court of appeal on final admission to moratorium on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3310">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">rectificatie</xs:documentation>
+					<xs:documentation xml:lang="en">rectification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1323">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">rectificatie</xs:documentation>
+					<xs:documentation xml:lang="en">rectification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2300">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">rectificatie</xs:documentation>
+					<xs:documentation xml:lang="en">rectification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1300">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak faillissement op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">declaration of bankruptcy on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1301">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak faillissement door tussentijdse beëindiging schuldsanering op [datum]</xs:documentation>
+					<xs:documentation xml:lang="en">declaration of bankruptcy as result of interim termination of debt restructuring on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1302">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak faillissement tijdens schuldsanering op [datum]</xs:documentation>
+					<xs:documentation xml:lang="en">declaration of bankruptcy during debt restructuring on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1303">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak faillissement door ontbinding akkoord in schuldsanering op [datum]</xs:documentation>
+					<xs:documentation xml:lang="en">declaration of bankruptcy by rescission of debt restructuring agreement on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1304">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">heropening faillissement door ontbinding akkoord in faillissement op [datum]</xs:documentation>
+					<xs:documentation xml:lang="en">reopening bankruptcy by rescission of bankruptcy agreement on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1305">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak faillissement door ontbinding akkoord in surseance op [datum]</xs:documentation>
+					<xs:documentation xml:lang="en">declaration of bankruptcy by rescission of moratorium agreement on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1306">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak faillissement na beëindiging surseance op [datum]</xs:documentation>
+					<xs:documentation xml:lang="en">declaration of bankruptcy after termination of moratorium on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak schuldsanering op [datum uitspraak]</xs:documentation>
+					<xs:documentation xml:lang="en">admission to debt restructuring on  [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2302">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak schuldsanering op [datum uitspraak] en verificatievergadering op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">admission to debt restructuring on [date] and verification meeting on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2303">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak schuldsanering op [datum uitspraak] verificatievergadering met akkoordbehandeling op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">admission to debt restructuring on [date] and verification meeting with hearing on agreement on [date] at [time] </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2304">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">omzetting faillissement in schuldsanering op [datum uitspraak]</xs:documentation>
+					<xs:documentation xml:lang="en">conversion of bankruptcy into debt restructuring on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2305">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak schuldsanering na vernietiging faillissement door verzet op [datum uitspraak]</xs:documentation>
+					<xs:documentation xml:lang="en">admission to debt restructuring  after nullification of bankruptcy by opposition on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2306">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">omzetting voorlopige surseance in schuldsanering op [datum uitspraak]</xs:documentation>
+					<xs:documentation xml:lang="en">conversion of provisional moratorium into debt restructuring on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2307">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">uitspraak voorlopige schuldsanering op [datum uitspraak]</xs:documentation>
+					<xs:documentation xml:lang="en">provisional admission to debt restructuring on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2308">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">omzetting voorlopige schuldsanering in definitieve op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">conversion of provisonal admission to debt restructuring into a final admission on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3300">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verlening voorlopige surseance op [datum uitspraak] crediteurenvergadering op [datum uitspraak] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">admission to interim moratorium on [date] meeting of creditors on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3301">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verlening voorlopige surseance op [datum uitspraak]  crediteurenvergadering met akkoordbehandeling  op [datum uitspraak] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">admission to interim moratorium on [date] meeting of creditors with hearing on agreement on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3302">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verlening definitieve surseance bij beschikking van [datum handeling] met ingang van [datum uitspraak] voor de duur van [variabel maanden/ jaren]</xs:documentation>
+					<xs:documentation xml:lang="en">admission to final moratorium by order of [date] from [date] for the duration of [variable number of months / years] </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3303">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verlenging termijn van surseance bij beschikking van [datum handeling] met ingang van [datum variabel] voor de duur van [variabel maanden/jaren]</xs:documentation>
+					<xs:documentation xml:lang="en">extension of moratorium term by order of [date] from [date] for the duration of  [variable number of months / years]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1307">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vervanging curator [naam oude cur] door [naam nieuwe cur]</xs:documentation>
+					<xs:documentation xml:lang="en">replacement of administrator [name former administrator] by [name new administrator]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2309">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vervanging bewindvoerder [naam oude bwv] door [naam nieuwe bwv]</xs:documentation>
+					<xs:documentation xml:lang="en">replacement of receiver  [name former receiver] by [name new receiver]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3304">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vervanging bewindvoerder [naam oude bwv] door [naam nieuwe bwv]</xs:documentation>
+					<xs:documentation xml:lang="en">replacement of receiver  [name former receiver] by [name new receiver]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1308">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vereenvoudigde afwikkeling van het faillissement</xs:documentation>
+					<xs:documentation xml:lang="en">simplified bankruptcy proceedings</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1309">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verificatievergadering op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">verification meeting on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1310">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verificatievergadering en akkoordbehandeling op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">verification meeting and hearing on agreement on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1311">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vergadering van schuldeisers op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">meeting of creditors on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2310">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verificatievergadering op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">verification meeting on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2311">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verificatievergadering en akkoordbehandeling op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">verification meeting and hearing on agreement on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2312">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verificatievergadering, saneringsplan en akkoordbehandeling op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">verification meeting, plan of sanitation and hearing on composition on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2313">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">voortzetting verificatievergadering, saneringsplan en akkoordbehandeling op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">resumption of verification meeting, restructuring plan and hearing on agreement on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2314">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verificatievergadering en zitting wijziging saneringsplan op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">verification meeting and hearing on adjustment of restructuring plan on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2315">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verificatievergadering en zitting beëindiging op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">verification meeting and hearing on termination on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2316">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verificatievergadering en zitting beëindiging op [datum handeling] om [tijdstip]  neerlegging slotuitdelingslijst vanaf [datum variabel]</xs:documentation>
+					<xs:documentation xml:lang="en">verification meeting and hearing on termination on [date] at [time] deposition of final distribution list from [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2317">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verificatievergadering en zitting wijziging saneringsplan en beëindiging op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">verification meeting and hearing on adjustment of restructuring plan and termination on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2318">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">verificatievergadering en zitting wijziging saneringsplan en beëindiging op [datum handeling] om [tijdstip]  neerlegging slotuitdelingslijst vanaf [datum variabel]</xs:documentation>
+					<xs:documentation xml:lang="en">verification meeting and hearing on adjustment of restructuring plan and termination on [date] at [time] deposition of  distribution list from [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2319">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">akkoordbehandeling op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">hearing on agreement on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2320">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">behandeling wijziging saneringsplan op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">hearing on restructuring plan on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2321">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">beëindigingszitting op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">hearing on termination on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2322">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">beëindigingszitting en wijziging saneringsplan op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">hearing on termination and adjustment of restructuring plan on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2323">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">beëindigingszitting op [datum handeling] om [tijdstip]  neerlegging slotuitdelingslijst vanaf [datum variabel]</xs:documentation>
+					<xs:documentation xml:lang="en">hearing on termination on [date] at [time]  deposition of final distribution list from [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2324">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">beëindigingszitting en wijziging saneringsplan op [datum handeling] om [tijdstip]  neerlegging slotuitdelingslijst vanaf [datum variabel]</xs:documentation>
+					<xs:documentation xml:lang="en">hearing on termination and adjustment of restructuring plan on [date] at [time]  deposition of  final distribution list from [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2325">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vergadering van schuldeisers op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">meeting of creditors on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3305">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">behandeling verlenging termijn surseance op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">hearing on extension of moratorium term on [date] at [time] </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3306">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">crediteurenvergadering met akkoordbehandeling op [datum handeling] om [tijdstip]</xs:documentation>
+					<xs:documentation xml:lang="en">meeting of creditors with  hearing on agreement on [date] at [time]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1312">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">neerlegging tussentijdse uitdelingslijst vanaf [datum variabel]</xs:documentation>
+					<xs:documentation xml:lang="en">deposition of interim distribution list from [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1313">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">neerlegging slotuitdelingslijst vanaf [datum variabel]</xs:documentation>
+					<xs:documentation xml:lang="en">deposition of final distribution list from [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1314">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">neerlegging slotuitdelingslijst vanaf [datum variabel]</xs:documentation>
+					<xs:documentation xml:lang="en">deposition of final distribution list from [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1315">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vereenvoudigde afwikkeling van het faillissement en neerlegging slotuitdelingslijst vanaf [datum variabel]</xs:documentation>
+					<xs:documentation xml:lang="en">simplified bankruptcy proceedings and deposition of final distribution list from [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2326">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">neerlegging tussentijdse uitdelingslijst vanaf [datum variabel]</xs:documentation>
+					<xs:documentation xml:lang="en">deposition of interim distribution list from [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2327">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">neerlegging slotuitdelingslijst vanaf [datum variabel]</xs:documentation>
+					<xs:documentation xml:lang="en">deposition of final distribution list from [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1316">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">opheffing faillissement wegens gebrek aan baten op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">removal from bankruptcy due to a lack of assets on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1317">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde faillissement door verbindende uitdelingslijst op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of bankruptcy by binding distribution list on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1318">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde faillissement door goedkeuring akkoord op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of bankruptcy by approval of agreement  on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1319">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde faillissement door verbindende uitdelingslijst na verzet op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of bankruptcy by binding distribution list after opposition on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1320">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vernietiging faillissement na verzet op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">nullification of bankruptcy after opposition on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2337">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vernietiging faillissement na verzet met herleving schuldsanering op [datum]</xs:documentation>
+					<xs:documentation xml:lang="en">nullification of bankruptcy after opposition with resurgence of debt restructuring on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2328">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde schuldsanering omdat alle vorderingen zijn voldaan op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of debt restructuring because all debts are paid on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2329">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde schuldsanering door hervatting betalingen op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of debt restructuring because of resumption of payments on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2330">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde schuldsanering door goedkeuring akkoord op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of debt restructuring because of approval of agreement on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2331">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde schuldsanering met uitdeling en met schone lei op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of debt restructuring with distribution and clean slate on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2332">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde schuldsanering zonder uitdeling en met schone lei op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of debt restructuring without distribution, with clean slate on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2333">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde schuldsanering met uitdeling en zonder schone lei op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of debt restructuring with distribution, without clean slate on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2334">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde schuldsanering zonder uitdeling en zonder schone lei op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of debt restructuring without distribution, without clean slate on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2335">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde schuldsanering door afwijzing definitieve schuldsanering op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of debt restructuring by rejection of final debt restructuring on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3307">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde surseance op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of moratorium on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3308">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde surseance wegens verlopen van de termijn op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of moratorium because of expiration of term on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3309">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde surseance door goedkeuring akkoord op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of moratorium by approval of agreement on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1322">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">indiening verzoek tot rehabilitatie door mr. [naam, adres, woonplaats procureur]</xs:documentation>
+					<xs:documentation xml:lang="en">filing of discharge request  by mr. [name, address of solicitor]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2336">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">ontneming schone lei in schuldsanering op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">deprivation of clean slate in debt restructuring on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1324">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">einde faillissement door voldoen van alle schulden op [datum handeling]</xs:documentation>
+					<xs:documentation xml:lang="en">termination of bankruptcy because all debts are paid on [date]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1325">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma verificatievergadering</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma verification meeting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1326">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma verificatievergadering en akkoordbehandeling</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma verification meeting and hearing on agreement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2338">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma uitspraak schuldsanering en verificatievergadering</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma admission to debt restructuring and verification meeting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2339">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma uitspraak schuldsanering en verificatievergadering met akkoordbehandeling</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma admission to debt restructuring and verification meeting with  hearing on agreement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2340">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma verificatievergadering</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma verification meeting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2341">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma verificatievergadering en akkoordbehandeling</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma verification meeting and hearing on agreement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2342">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma verificatievergadering, saneringsplan en akkoordbehandeling</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma verification meeting, restructuring plan and hearing on agreemeent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2343">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma verificatievergadering en zitting wijziging saneringsplan</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma verification meeting and hearing on adjustment of restructuring plan </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2344">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma verificatievergadering en zitting beëindiging</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma verification meeting, hearing on termination</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2345">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma verificatievergadering en zitting beëindiging en neerlegging slotuitdelingslijst</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma verification meeting, hearing on termination and deposition of distribution list </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2346">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma verificatievergadering en zitting wijziging saneringsplan en beëindiging</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma verification meeting and hearing on adjustment of restructuring plan and termination</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2347">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">pro forma verificatievergadering en zitting wijziging saneringsplan en beëindiging en neerlegging slotuitdelingsl. vanaf</xs:documentation>
+					<xs:documentation xml:lang="en">pro forma verification meeting and hearing on adjustment of restructuring plan and termination and deposition of distribution list from </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2348">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">rekening en verantwoording afgelegd</xs:documentation>
+					<xs:documentation xml:lang="en">rendered and accounted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1328">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vervanging rechtercommissaris</xs:documentation>
+					<xs:documentation xml:lang="en">replacement supervisory judge</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2349">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vervanging rechtercommissaris</xs:documentation>
+					<xs:documentation xml:lang="en">replacement supervisory judge</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3311">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">vervanging rechtercommissaris</xs:documentation>
+					<xs:documentation xml:lang="en">replacement supervisory judge</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1330">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">aanvullende postblokkade</xs:documentation>
+					<xs:documentation xml:lang="en">additional mail blockade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1331">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">adreswijziging</xs:documentation>
+					<xs:documentation xml:lang="en">change of address</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1332">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">tussentijdse intrekking postblokkade</xs:documentation>
+					<xs:documentation xml:lang="en">interim abrogation mail blockade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2351">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">aanvullende postblokkade</xs:documentation>
+					<xs:documentation xml:lang="en">additional mail blockade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2352">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">adreswijziging</xs:documentation>
+					<xs:documentation xml:lang="en">change of address</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2353">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">tussentijdse intrekking postblokkade</xs:documentation>
+					<xs:documentation xml:lang="en">interim abrogation mail blockade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3313">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Beëindiging door omzetting in faillissement op</xs:documentation>
+					<xs:documentation xml:lang="en">Termination of suspension of payments by conversion into bankruptcy on</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1334">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Faillissement overgedragen aan ander arrondissement op</xs:documentation>
+					<xs:documentation xml:lang="en">Bankruptcy transferred to other district court on</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1333">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Faillissement omgezet in SSR op </xs:documentation>
+					<xs:documentation xml:lang="en">Bankruptcy converted into debt restructuring on</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2355">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Schuldsanering overgedragen aan ander arrondissement op</xs:documentation>
+					<xs:documentation xml:lang="en">Debt restructuring transferred to other district court on</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2354">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Tussentijdse beëindiging SSR met faillietverklaring op</xs:documentation>
+					<xs:documentation xml:lang="en">Premature termination of debt restructuring by declaration of bankruptcy on</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3314">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Surseance overgedragen aan ander arrondissement op</xs:documentation>
+					<xs:documentation xml:lang="en">Suspension of payments transferred to other district court on</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubRC">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">rechter-commissaris</xs:documentation>
+			<xs:documentation xml:lang="en">supervisory judge</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubSchuldsaneringsregelingNummer">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Registratienummer Schuldsaneringsregeling</xs:documentation>
+			<xs:documentation xml:lang="en">registration number Debt Restructuring Act</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Za-z]{3}\d{10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inspubVorigInsolventienummer">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">previous insolvency number</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="instantieRechtbankCode">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Code van de rechtbank die verantwoordelijk is voor publicatie</xs:documentation>
+			<xs:documentation xml:lang="en">Code of the district court responsible for publication.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="instantieRechtbankNaam">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Naam van de rechtbank die verantwoordelijk is voor publicatie</xs:documentation>
+			<xs:documentation xml:lang="en">Name of the district court responsible for publication.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="KvKNummer">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Nummer Handelsregister</xs:documentation>
+			<xs:documentation xml:lang="en">Registration number Chamber of Commerce</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{5,8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KvKPlaats">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Plaats Kamer van Koophandel</xs:documentation>
+			<xs:documentation xml:lang="en">District of Chamber of Commerce</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="40"/>
+			<xs:pattern value="\D*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="persoonGeboortedatum">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">date of birth</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="persoonOverlijdenDatum">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">date of death</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="rechtspersoonlijkheid">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">legal personality</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="natuurlijk persoon">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">natural person</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="rechtspersoon">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">legal person</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="vestigingCode">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Code van de vestiging die de insolventie behandelt</xs:documentation>
+			<xs:documentation xml:lang="en">Code of the district court office processing the insolvency.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="vestigingNaam">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">Code van de vestiging die de insolventie behandelt</xs:documentation>
+			<xs:documentation xml:lang="en">Code of the district court office processing the insolvency.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="24"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="inspubAdresCBElem">
+		<xs:sequence>
+			<xs:element name="datumBegin" type="datumBegin" minOccurs="0"/>
+			<xs:element name="straat" type="inspubAdresStraat"/>
+			<xs:element name="huisnummer" type="inspubAdresHuisnummer"/>
+			<xs:element name="huisnummerToevoeging1" type="inspubAdresHuisnummerToevoeging1" minOccurs="0"/>
+			<xs:element name="huisnummerToevoeging2" type="inspubAdresHuisnummerToevoeging2" minOccurs="0"/>
+			<xs:element name="postcode" type="inspubAdresPostcode" minOccurs="0"/>
+			<xs:element name="plaats" type="inspubAdresPlaats"/>
+			<xs:element name="telefoonnummer" type="inspubAdresTelefoon" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inspubAdresHandelsnaamElem">
+		<xs:sequence>
+			<xs:element name="adresType" type="inspubAdresType"/>
+			<xs:element name="datumBegin" type="datumBegin" minOccurs="0"/>
+			<xs:element name="straat" type="inspubAdresStraat"/>
+			<xs:element name="huisnummer" type="inspubAdresHuisnummer" minOccurs="0"/>
+			<xs:element name="huisnummerToevoeging1" type="inspubAdresHuisnummerToevoeging1" minOccurs="0"/>
+			<xs:element name="huisnummerToevoeging2" type="inspubAdresHuisnummerToevoeging2" minOccurs="0"/>
+			<xs:element name="postcode" type="inspubAdresPostcode" minOccurs="0"/>
+			<xs:element name="plaats" type="inspubAdresPlaats"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inspubAdresInsolvente">
+		<xs:sequence>
+			<xs:element name="datumBegin" type="datumBegin"/>
+			<xs:element name="straat" type="inspubAdresStraat">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Lengte in afwijking van NEN.</xs:documentation>
+					<xs:documentation xml:lang="en">Length not NEN-compliant.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="huisnummer" type="inspubAdresHuisnummer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Lengte in afwijking van NEN</xs:documentation>
+					<xs:documentation xml:lang="en">Length not NEN-compliant.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="huisnummerToevoeging1" type="inspubAdresHuisnummerToevoeging1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Lengte in afwijking van NEN</xs:documentation>
+					<xs:documentation xml:lang="en">Length not NEN-compliant.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="huisnummerToevoeging2" type="inspubAdresHuisnummerToevoeging2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Bestaan en lengte in afwijking van NEN</xs:documentation>
+					<xs:documentation xml:lang="en">Existence and length not NEN-compliant.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="postcode" type="inspubAdresPostcode" minOccurs="0"/>
+			<xs:element name="plaats" type="inspubAdresPlaats" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="nl">Lengte in afwijking van NEN. Nederlandse plaatsen worden gevuld via postcode-tabel.</xs:documentation>
+					<xs:documentation xml:lang="en">Length not NEN-compliant. Dutch geographical names names are taken from the postal code database.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inspubCbvElem">
+		<xs:sequence>
+			<xs:element name="datumBegin" type="datumBegin"/>
+			<xs:element name="datumEind" type="datumEind" minOccurs="0"/>
+			<xs:element name="titulatuur" type="inspubCbvTitel" minOccurs="0"/>
+			<xs:element name="voorletters" type="inspubCbvVoorletters" minOccurs="0"/>
+			<xs:element name="voorvoegsel" type="inspubCbvVoorvoegsel" minOccurs="0"/>
+			<xs:element name="achternaam" type="inspubCbvAchternaam"/>
+			<xs:element name="CB" type="inspubCbvCB"/>
+			<xs:element name="adres" type="inspubAdresCBElem"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inspubCbvers">
+		<xs:sequence>
+			<xs:element name="cbv" type="inspubCbvElem" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inspubHandelendOnderDeNaamElem">
+		<xs:sequence>
+			<xs:element name="handelsnaam" type="inspubHandelsnaam"/>
+			<xs:element name="KvKNummer" type="KvKNummer" minOccurs="0"/>
+			<xs:element name="KvKPlaats" type="KvKPlaats" minOccurs="0"/>
+			<xs:element name="handelsadressen" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="handelsadres" type="inspubAdresHandelsnaamElem" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inspubPersoonWebsite">
+		<xs:sequence>
+			<xs:element name="rechtspersoonlijkheid" type="rechtspersoonlijkheid"/>
+			<xs:element name="voornaam" type="inspubPersoonVoornaam" minOccurs="0"/>
+			<xs:element name="voorletters" type="inspubPersoonVoorletters" minOccurs="0"/>
+			<xs:element name="voorvoegsel" type="inspubPersoonVoorvoegsel" minOccurs="0"/>
+			<xs:element name="achternaam" type="inspubPersoonAchternaam" minOccurs="0"/>
+			<xs:element name="geboortedatum" type="persoonGeboortedatum" minOccurs="0"/>
+			<xs:element name="geboorteplaats" type="inspubPersoonGeboorteplaats" minOccurs="0"/>
+			<xs:element name="geboorteland" type="inspubLandNaam" minOccurs="0"/>
+			<xs:element name="overlijdensdatum" type="persoonOverlijdenDatum" minOccurs="0"/>
+			<xs:element name="KvKNummer" type="KvKNummer" minOccurs="0"/>
+			<xs:element name="KvKPlaats" type="KvKPlaats" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inspubPublicatiegeschiedenis">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">history of publications</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="publicatie" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="publicatieDatum" type="datumPublicatie"/>
+						<xs:element name="publicatieKenmerk" type="inspubPublicatiekenmerk"/>
+						<xs:element name="publicatieOmschrijving" type="inspubPublicatieOmschrijvingVerlengd"/>
+						<xs:element name="publicatieSoortCode" type="inspubPublicatiesoortCode"/>
+						<xs:element name="zittingslocatie" type="inspubZittingslocatie" minOccurs="0"/>
+						<xs:element name="publicerendeInstantieCode" type="instantieRechtbankCode"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="instroomLegacy" type="inspubInstroomLegacy"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inspubZittingslocatie">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">zittingslocatie</xs:documentation>
+			<xs:documentation xml:lang="en">location of hearings</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="straat" type="inspubAdresStraat"/>
+			<xs:element name="huisnummer" type="adresHuisnummerBezoekadres"/>
+			<xs:element name="huisnummerToevoeging" type="inspubAdresHuisnummerToevoeging1" minOccurs="0"/>
+			<xs:element name="plaats" type="inspubAdresPlaats"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="inspubWebserviceInsolvente">
+		<xs:annotation>
+			<xs:documentation xml:lang="nl">insolventie</xs:documentation>
+			<xs:documentation xml:lang="en">insolvency</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="exceptie">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="errorcode" type="exceptieCode" use="required"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="insolvente">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ssrNummer" type="inspubSchuldsaneringsregelingNummer" minOccurs="0"/>
+							<xs:element name="preHGKInsolventieNummer" type="inspubpreHGKInsolventieNummer"/>
+							<xs:element name="insolventienummer" type="inspubInsolventienummer"/>
+							<xs:element name="behandelendeInstantieCode" type="instantieRechtbankCode"/>
+							<xs:element name="behandelendeInstantieNaam" type="instantieRechtbankNaam"/>
+							<xs:element name="behandelendeVestigingCode" type="vestigingCode"/>
+							<xs:element name="behandelendeVestigingNaam" type="vestigingNaam"/>
+							<xs:element name="isPreHGKGepubliceerd" type="inspubIsPreHGKGepubliceerd"/>
+							<xs:element name="persoon" type="inspubPersoonWebsite"/>
+							<xs:element name="RC" type="inspubRC" minOccurs="0"/>
+							<xs:element name="VorigeRC" type="inspubRC" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="nl"> Vorige rechter-commissaris</xs:documentation>
+									<xs:documentation xml:lang="en"> Former supervisory judge</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="vorigInsolventienummer" type="inspubInsolventienummer" minOccurs="0"/>
+							<xs:element name="adressen">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="geheimAdres" type="inspubGeheimAdres"/>
+										<xs:element name="adres" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="inspubAdresInsolvente">
+														<xs:sequence>
+															<xs:element name="adresType" type="inspubAdresType"/>
+														</xs:sequence>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="handelendOnderDeNamen" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="handelendOnderDeNaam" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="inspubHandelendOnderDeNaamElem">
+														<xs:attribute name="voorheen" type="inspubHandelsnaamVoorheen" use="required"/>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="cbvers" type="inspubCbvers" minOccurs="0"/>
+							<xs:element name="publicatiegeschiedenis" type="inspubPublicatiegeschiedenis"/>
+							<xs:element name="eindeVindbaarheid" type="inspubEindeVindbaarheid" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
