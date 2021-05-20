@@ -6,12 +6,19 @@ use DMT\CommandBus\Validator\ValidationMiddleware;
 use DMT\Insolvency\Exception\Exception;
 use DMT\Insolvency\Exception\ExceptionMiddleware;
 use DMT\Insolvency\Http\GetReportHandler;
+use DMT\Insolvency\Http\Middleware\ExceptionMiddleware as HttpExceptionMiddleware;
+use DMT\Insolvency\Http\Middleware\SoapActionMiddleware;
 use DMT\Insolvency\Http\Request\GetReport;
 use DMT\Insolvency\Http\Response\GetReportResponse;
 use DMT\Insolvency\Soap\Handler as SoapHandler;
 use DMT\Insolvency\Soap\Request;
 use DMT\Insolvency\Soap\Request as SoapRequest;
 use DMT\Insolvency\Soap\Response;
+use DMT\Insolvency\Soap\Serializer\SoapSerializer;
+use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
 use JMS\Serializer\SerializerInterface;
 use League\Tactician\CommandBus;
 use League\Tactician\Handler\CommandHandlerMiddleware;
@@ -196,10 +203,25 @@ class Client
      */
     public function getHandler(string $request)
     {
+        $stack = HandlerStack::create(new CurlHandler());
+        $stack->push(Middleware::mapResponse(new HttpExceptionMiddleware()));
+
         if (is_a($request, SoapRequest::class, true)) {
-            return new SoapHandler($this->config, $this->serializer);
+            $stack->push(Middleware::mapRequest(new SoapActionMiddleware()));
+
+            $client = new HttpClient([
+                'base_uri' => $this->config->endPoint,
+                'handler' => $stack,
+            ]);
+
+            return new SoapHandler($client, new SoapSerializer($this->config));
         }
 
-        return new GetReportHandler($this->config);
+        $client = new HttpClient([
+            'base_uri' => $this->config->documentUri,
+            'handler' => $stack,
+        ]);
+
+        return new GetReportHandler($client);
     }
 }

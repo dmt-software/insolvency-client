@@ -26,6 +26,8 @@ class SearchReportsSince implements Request
     public $datetimeFrom;
 
     /**
+     * @Assert\NotNull
+     *
      * @JMS\SerializedName("datetimeTo")
      * @JMS\Type("DateTime<'Y-m-d\TH:i:sP'>")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")

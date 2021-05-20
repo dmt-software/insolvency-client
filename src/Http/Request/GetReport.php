@@ -7,5 +7,6 @@ namespace DMT\Insolvency\Http\Request;
  */
 class GetReport
 {
+    /** @var string $reportId */
     public $reportId;
 }

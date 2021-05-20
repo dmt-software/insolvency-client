@@ -2,17 +2,11 @@
 
 namespace DMT\Insolvency\Http;
 
-use DMT\Insolvency\Config;
-use DMT\Insolvency\Exception\Exception;
-use DMT\Insolvency\Http\Middleware\ExceptionMiddleware;
 use DMT\Insolvency\Http\Request\GetReport;
 use DMT\Insolvency\Http\Response\GetReportResponse;
 use DMT\Insolvency\Http\Response\GetReportResult;
 use DMT\Insolvency\Model\Document;
 use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Handler\CurlHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request as HttpRequest;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -21,26 +15,16 @@ use Psr\Http\Client\ClientExceptionInterface;
  */
 class GetReportHandler
 {
-    /** @var Config $config */
-    protected $config;
-
     /** @var HttpClient|null $httpClient */
     protected $httpClient;
 
     /**
      * GetReportHandler constructor.
-     * @param Config $config
+     * @param HttpClient $httpClient
      */
-    public function __construct(Config $config)
+    public function __construct(HttpClient $httpClient)
     {
-        $this->config = $config;
-
-        $stack = HandlerStack::create(new CurlHandler());
-        $stack->push(Middleware::mapResponse(new ExceptionMiddleware()));
-        $this->httpClient = new HttpClient([
-            'base_uri' => $config->documentUri,
-            'handler' => $stack,
-        ]);
+        $this->httpClient = $httpClient;
     }
 
     /**
@@ -48,7 +32,6 @@ class GetReportHandler
      *
      * @param GetReport $request
      * @return GetReportResponse
-     * @throws Exception
      * @throws ClientExceptionInterface
      */
     public function handle(GetReport $request): GetReportResponse

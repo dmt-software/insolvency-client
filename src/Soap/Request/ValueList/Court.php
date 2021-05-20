@@ -60,7 +60,7 @@ class Court
     public function __construct(string $court)
     {
         if (in_array($court, self::COURTS)) {
-            $court = array_search($court, self::COURTS);
+            $court = (string)array_search($court, self::COURTS);
         }
 
         $this->court = $court;
@@ -71,6 +71,6 @@ class Court
      */
     public static function getCourtCodes(): array
     {
-        return array_keys(self::COURTS);
+        return array_map('strval', array_keys(self::COURTS));
     }
 }

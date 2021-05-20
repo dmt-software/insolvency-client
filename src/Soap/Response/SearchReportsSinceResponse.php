@@ -15,7 +15,7 @@ class SearchReportsSinceResponse implements Response
 {
     /**
      * @JMS\SerializedName("searchReportsSinceResult")
-     * @JMS\Type("DMT\Insolvency\Soap\Response\searchReportsSinceResult")
+     * @JMS\Type("DMT\Insolvency\Soap\Response\SearchReportsSinceResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
      * @var SearchReportsSinceResult $searchReportsSinceResult
