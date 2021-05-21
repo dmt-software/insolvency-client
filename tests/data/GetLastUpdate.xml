@@ -1,0 +1,11 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+        <GetLastUpdateResponse xmlns="http://www.rechtspraak.nl/namespaces/cir01">
+            <GetLastUpdateResult>
+                <lastUpdate xmlns="http://www.rechtspraak.nl/namespaces/updateWs">
+                    <lastUpdateDate>2021-04-28+01:00</lastUpdateDate>
+                </lastUpdate>
+            </GetLastUpdateResult>
+        </GetLastUpdateResponse>
+    </soap:Body>
+</soap:Envelope>

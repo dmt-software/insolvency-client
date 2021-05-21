@@ -19,7 +19,7 @@ class Config
      *
      * @var string $endPoint
      */
-    public $endPoint;
+    public $endPoint = 'https://webservice.rechtspraak.nl/cir.asmx';
 
     /**
      * The authorized user.
@@ -40,7 +40,7 @@ class Config
      *
      * @var string $documentUri
      */
-    public $documentUri;
+    public $documentUri = 'https://insolventies.rechtspraak.nl/services/verslagenservice/getpdf/';
 
     /**
      * Config constructor.

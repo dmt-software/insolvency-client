@@ -50,7 +50,7 @@ class Client
     public function __construct(Config $config, SerializerInterface $serializer = null)
     {
         $this->config = $config;
-        $this->serializer = $serializer;
+        $this->serializer = $serializer ?? new SoapSerializer($config);
 
         $this->commandBus = new CommandBus([
             new LockingMiddleware(),
@@ -67,132 +67,221 @@ class Client
     /**
      * Search for publications of a specific insolvency.
      *
-     * @param Request\SearchInsolvencyID $request
-     * @return Response\SearchInsolvencyIDResponse
+     * @param string $insolvencyID the insolvency identification.
+     * @param string|null $court the count (number) where the inslovency is registered.
+     *
+     * @return Response|Response\SearchInsolvencyIDResponse
      * @throws Exception
      */
-    public function searchInsolvencyId(Request\SearchInsolvencyID $request): Response\SearchInsolvencyIDResponse
+    public function searchInsolvencyId(string $insolvencyID, string $court = null): Response\SearchInsolvencyIDResponse
     {
-        return $this->commandBus->handle($request);
+        $request = new Request\SearchInsolvencyID();
+        $request->insolvencyID = $insolvencyID;
+        $request->court = $court ? new Request\ValueList\Court($court) : null;
+
+        return $this->process($request);
     }
 
     /**
      * Search for publications for a person.
      *
-     * @param Request\SearchNaturalPerson $request
-     * @return Response\SearchNaturalPersonResponse
+     * @param \DateTime|null $dateOfBirth the date of birth of the pserson.
+     * @param string|null $prefix the surname prefix.
+     * @param string|null $surname the surname of the person.
+     * @param int|null $houseNumber the house number of the person's address.
+     * @param string|null $postalCode the postcode of the person's address.
+     *
+     * @return Response|Response\SearchNaturalPersonResponse
      * @throws Exception
      */
-    public function searchNaturalPerson(Request\SearchNaturalPerson $request): Response\SearchNaturalPersonResponse
-    {
-        return $this->commandBus->handle($request);
+    public function searchNaturalPerson(
+        \DateTime $dateOfBirth = null,
+        string $prefix = null,
+        string $surname = null,
+        int $houseNumber = null,
+        string $postalCode = null
+    ): Response\SearchNaturalPersonResponse {
+        $request = new Request\SearchNaturalPerson();
+        $request->dateOfBirth = $dateOfBirth;
+        $request->prefix = $prefix;
+        $request->surname = $surname;
+        $request->houseNumber = $houseNumber;
+        $request->postalCode = $postalCode;
+
+        return $this->process($request);
     }
 
     /**
      * Search for publications of an undertaking.
      *
-     * @param Request\SearchUndertaking $request
-     * @return Response\SearchUndertakingResponse
+     * @param string|null $name the name of the undertaking.
+     * @param string|null $commercialRegisterID the chamber of commerce number.
+     * @param string|null $postalCode the postcode of the undertaking's address.
+     * @param int|null $houseNumber the house number of the undertaking' address.
+     *
+     * @return Response|Response\SearchUndertakingResponse
      * @throws Exception
      */
-    public function searchUndertaking(Request\SearchUndertaking $request): Response\SearchUndertakingResponse
-    {
-        return $this->commandBus->handle($request);
+    public function searchUndertaking(
+        string $name = null,
+        string $commercialRegisterID = null,
+        string $postalCode = null,
+        int $houseNumber = null
+    ): Response\SearchUndertakingResponse {
+        $request = new Request\SearchUndertaking();
+        $request->name = $name;
+        $request->commercialRegisterID = $commercialRegisterID;
+        $request->postalCode = $postalCode;
+        $request->houseNumber = $houseNumber;
+
+        return $this->process($request);
     }
 
     /**
      * Get insolvency case.
      *
-     * @param Request\GetCase $request
-     * @return Response\GetCaseResponse
+     * @param string $publicationNumber the publication number of the case.
+     *
+     * @return Response|Response\GetCaseResponse
      * @throws Exception
      */
-    public function getCase(Request\GetCase $request): Response\GetCaseResponse
+    public function getCase(string $publicationNumber): Response\GetCaseResponse
     {
-        return $this->commandBus->handle($request);
+        $request = new Request\GetCase();
+        $request->publicationNumber = $publicationNumber;
+
+        return $this->process($request);
     }
 
     /**
      * Get insolvency case with references to its reports.
      *
-     * @param Request\GetCaseWithReports $request
-     * @return Response\GetCaseWithReportsResponse
+     * @param string $publicationNumber the publication number of the case.
+     *
+     * @return Response|Response\GetCaseWithReportsResponse
      * @throws Exception
      */
-    public function getCaseWithReports(Request\GetCaseWithReports $request): Response\GetCaseWithReportsResponse
+    public function getCaseWithReports(string $publicationNumber): Response\GetCaseWithReportsResponse
     {
-        return $this->commandBus->handle($request);
+        $request = new Request\GetCaseWithReports();
+        $request->publicationNumber = $publicationNumber;
+
+        return $this->process($request);
     }
 
     /**
      * Get a report for an insolvency.
      *
-     * @param GetReport $request
+     * @param string $reportId the report identification number.
+     *
      * @return GetReportResponse
      * @throws Exception
      */
-    public function getReport(GetReport $request): GetReportResponse
+    public function getReport(string $reportId): GetReportResponse
     {
-        return $this->commandBus->handle($request);
+        $request = new GetReport();
+        $request->reportId = $reportId;
+
+        return $this->process($request);
     }
 
     /**
      * Get the date when the latest publication is added.
      *
-     * @param Request\GetLastUpdate $request
-     * @return Response\GetLastUpdateResponse
+     * @return Response|Response\GetLastUpdateResponse
      * @throws Exception
      */
-    public function getLastUpdate(Request\GetLastUpdate $request): Response\GetLastUpdateResponse
+    public function getLastUpdate(): Response\GetLastUpdateResponse
     {
-        return $this->commandBus->handle($request);
+        return $this->process(new Request\GetLastUpdate());
     }
 
     /**
      * Search for publications of a specific date.
      *
-     * @param Request\SearchByDate $request
-     * @return Response\SearchByDateResponse
+     * @param \DateTime $date tne date of the publications to look up.
+     * @param string $court the court (number) where the publications are registered.
+     * @param string|null $pubType the type of publication.
+     *
+     * @return Response|Response\SearchByDateResponse
      * @throws Exception
      */
-    public function searchByDate(Request\SearchByDate $request): Response\SearchByDateResponse
+    public function searchByDate(\DateTime $date, string $court, string $pubType = null): Response\SearchByDateResponse
     {
-        return $this->commandBus->handle($request);
+        $request = new Request\SearchByDate();
+        $request->date = $date;
+        $request->court = new Request\ValueList\Court($court);
+        $request->pubType = $pubType ? new Request\ValueList\PublicationType($pubType) : null;
+
+        return $this->process($request);
     }
 
     /**
      * Search for publications of the last mutated/added insolvencies for data replication.
      *
-     * @param Request\SearchModifiedSince $request
-     * @return Response\SearchModifiedSinceResponse
+     * @param \DateTime $modifyDate the modified date since.
+     *
+     * @return Response|Response\SearchModifiedSinceResponse
      * @throws Exception
      */
-    public function searchModifiedSince(Request\SearchModifiedSince $request): Response\SearchModifiedSinceResponse
+    public function searchModifiedSince(\DateTime $modifyDate): Response\SearchModifiedSinceResponse
     {
-        return $this->commandBus->handle($request);
+        $request = new Request\SearchModifiedSince();
+        $request->modifyDate = $modifyDate;
+
+        return $this->process($request);
     }
 
     /**
      * Search for removed publications for data replication.
      *
-     * @param Request\SearchRemovedSince $request
-     * @return Response\SearchRemovedSinceResponse
+     * @param \DateTime $modifyDate the modified date since.
+     *
+     * @return Response|Response\SearchRemovedSinceResponse
      * @throws Exception
      */
-    public function searchRemovedSince(Request\SearchRemovedSince $request): Response\SearchRemovedSinceResponse
+    public function searchRemovedSince(\DateTime $modifyDate): Response\SearchRemovedSinceResponse
     {
-        return $this->commandBus->handle($request);
+        $request = new Request\SearchRemovedSince();
+        $request->modifyDate = $modifyDate;
+
+        return $this->process($request);
     }
 
     /**
      * Search for added and modified reposts in a given time period.
      *
-     * @param Request\SearchReportsSince $request
-     * @return Response\SearchReportsSinceResponse
+     * @param \DateTime $datetimeFrom the start date.
+     * @param \DateTime|null $datetimeTo the end date.
+     *
+     * @return Response|Response\SearchReportsSinceResponse
      * @throws Exception
      */
-    public function searchReportsSince(Request\SearchReportsSince $request): Response\SearchReportsSinceResponse
+    public function searchReportsSince(
+        \DateTime $datetimeFrom,
+        \DateTime $datetimeTo = null
+    ): Response\SearchReportsSinceResponse {
+        $request = new Request\SearchReportsSince();
+        $request->datetimeFrom = $datetimeFrom;
+        $request->datetimeTo = $datetimeTo ?? new \DateTime();
+
+        return $this->process($request);
+    }
+
+    /**
+     * Process a request.
+     *
+     * @param Request|GetReport $request
+     *
+     * @return Response|GetReportResponse
+     * @throws Exception
+     */
+    public function process($request)
     {
+        if (!$request instanceof Request && !$request instanceof GetReport) {
+            throw new \TypeError('Invalid request');
+        }
+
         return $this->commandBus->handle($request);
     }
 
@@ -203,25 +292,31 @@ class Client
      */
     public function getHandler(string $request)
     {
+        if (is_a($request, SoapRequest::class, true)) {
+            return new SoapHandler($this->getHttpClient(), $this->serializer);
+        }
+
+        return new GetReportHandler($this->getHttpClient(false));
+    }
+
+    /**
+     * Get http client.
+     *
+     * @param bool $forSoap
+     * @return HttpClient
+     */
+    protected function getHttpClient(bool $forSoap = true): HttpClient
+    {
         $stack = HandlerStack::create(new CurlHandler());
         $stack->push(Middleware::mapResponse(new HttpExceptionMiddleware()));
 
-        if (is_a($request, SoapRequest::class, true)) {
+        if ($forSoap) {
             $stack->push(Middleware::mapRequest(new SoapActionMiddleware()));
-
-            $client = new HttpClient([
-                'base_uri' => $this->config->endPoint,
-                'handler' => $stack,
-            ]);
-
-            return new SoapHandler($client, new SoapSerializer($this->config));
         }
 
-        $client = new HttpClient([
-            'base_uri' => $this->config->documentUri,
+        return new HttpClient([
+            'base_uri' => $forSoap ? $this->config->endPoint : $this->config->documentUri,
             'handler' => $stack,
         ]);
-
-        return new GetReportHandler($client);
     }
 }

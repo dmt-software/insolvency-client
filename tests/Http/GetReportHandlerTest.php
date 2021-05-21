@@ -22,14 +22,14 @@ class GetReportHandlerTest extends TestCase
     {
         $client = new HttpClient([
             'handler' => HandlerStack::create(
-                new MockHandler([new Response(200, ['Content-Type' => 'application/pdf'], '255044462D')])
+                new MockHandler([new Response(200, ['Content-Type' => 'application/pdf'], '%PDF-')])
             )
         ]);
 
         $handler = new GetReportHandler($client);
         $response = $handler->handle(new GetReport());
 
-        $this->assertSame(base64_encode('255044462D'), $response->getReportResult->report->document);
+        $this->assertSame(base64_encode('%PDF-'), $response->getReportResult->report->document);
         $this->assertSame('base64', $response->getReportResult->report->encoding);
         $this->assertSame('application/pdf', $response->getReportResult->report->mime);
     }

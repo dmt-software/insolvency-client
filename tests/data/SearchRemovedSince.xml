@@ -1,0 +1,37 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+               xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+               xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+               xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+    <env:Header xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+        <wsa:Action>http://www.rechtspraak.nl/namespaces/cir01/searchRemovedSinceResponse</wsa:Action>
+        <wsa:MessageID>urn:uuid:0ca7d06a-2575-4112-aa38-32d0ae7b4d70</wsa:MessageID>
+        <wsa:RelatesTo>urn:uuid:455af313-fef8-4b7c-88d0-8bbc543101cb</wsa:RelatesTo>
+        <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+        <wsse:Security>
+            <wsu:Timestamp wsu:Id="Timestamp-e77cfded-8f99-437a-860e-5f40910e6d48">
+                <wsu:Created>2021-05-21T17:22:46Z</wsu:Created>
+                <wsu:Expires>2021-05-21T17:27:46Z</wsu:Expires>
+            </wsu:Timestamp>
+        </wsse:Security>
+    </env:Header>
+    <soap:Body>
+        <searchRemovedSinceResponse xmlns="http://www.rechtspraak.nl/namespaces/cir01">
+            <searchRemovedSinceResult>
+                <verwijderdePublicatieLijst
+                        extractiedatum="2021-05-21T19:22:46.7563602+02:00"
+                        xmlns="http://www.rechtspraak.nl/namespaces/inspubber01">
+                    <verwijderdeInsolventie>
+                        <insolventienummer>R.16/00/100</insolventienummer>
+                        <publicatieKenmerk>16.mne.00.100.R.2348.1.00</publicatieKenmerk>
+                        <reden>Eindevindbaarheid</reden>
+                    </verwijderdeInsolventie>
+                    <verwijderdeInsolventie>
+                        <insolventienummer>R.16/00/200</insolventienummer>
+                        <publicatieKenmerk>16.mne.00.200.R.2348.1.00</publicatieKenmerk>
+                        <reden>Eindevindbaarheid</reden>
+                    </verwijderdeInsolventie>
+                </verwijderdePublicatieLijst>
+            </searchRemovedSinceResult>
+        </searchRemovedSinceResponse>
+    </soap:Body>
+</soap:Envelope>

@@ -15,7 +15,7 @@ class SearchModifiedSinceResponse implements Response
 {
     /**
      * @JMS\SerializedName("searchModifiedSinceResult")
-     * @JMS\Type("DMT\Insolvency\Soap\Response\searchModifiedSinceResult")
+     * @JMS\Type("DMT\Insolvency\Soap\Response\SearchModifiedSinceResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
      * @var SearchModifiedSinceResult $searchModifiedSinceResult

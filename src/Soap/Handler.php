@@ -16,12 +16,12 @@ use Psr\Http\Client\ClientExceptionInterface;
 class Handler
 {
     /**
-     * @var SerializerInterface|null $serializer
+     * @var SerializerInterface $serializer
      */
     protected $serializer;
 
     /**
-     * @var HttpClient|null $httpClient
+     * @var HttpClient $httpClient
      */
     protected $httpClient;
 

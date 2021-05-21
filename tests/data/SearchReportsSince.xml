@@ -1,0 +1,51 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+               xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+               xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+               xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+    <env:Header xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+        <wsa:Action>http://www.rechtspraak.nl/namespaces/cir01/searchReportsSinceResponse</wsa:Action>
+        <wsa:MessageID>urn:uuid:deb01a85-2461-4ea8-a15c-73f59d7c5af0</wsa:MessageID>
+        <wsa:RelatesTo>urn:uuid:faa85559-3759-46cf-814b-674260676d34</wsa:RelatesTo>
+        <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+        <wsse:Security>
+            <wsu:Timestamp wsu:Id="Timestamp-4df52ebf-9172-4091-aae9-a8582abd15fc">
+                <wsu:Created>2021-05-21T17:28:43Z</wsu:Created>
+                <wsu:Expires>2021-05-21T17:33:43Z</wsu:Expires>
+            </wsu:Timestamp>
+        </wsse:Security>
+    </env:Header>
+    <soap:Body>
+        <searchReportsSinceResponse xmlns="http://www.rechtspraak.nl/namespaces/cir01">
+            <searchReportsSinceResult>
+                <beschikbareVerslagen
+                        extractiedatum="2021-05-21T19:28:43.6836357+02:00"
+                        xmlns="http://www.rechtspraak.nl/namespaces/inspubber01">
+                    <verslag>
+                        <insolventienummer>F.08/00/100</insolventienummer>
+                        <rechtbank>Overijssel</rechtbank>
+                        <publicatiedatumVerslag>2021-05-20T16:00:10</publicatiedatumVerslag>
+                        <kenmerk>08_ove_00_100_F_V_00_B</kenmerk>
+                        <titel>Financieel verslag 17-05-2021</titel>
+                        <eindverslag>false</eindverslag>
+                    </verslag>
+                    <verslag>
+                        <insolventienummer>F.02/00/200</insolventienummer>
+                        <rechtbank>Zeeland - West-Brabant</rechtbank>
+                        <publicatiedatumVerslag>2021-05-20T15:30:48</publicatiedatumVerslag>
+                        <kenmerk>02_zwb_00_200_F_V_00</kenmerk>
+                        <titel>Verslag: 20-05-2021</titel>
+                        <eindverslag>false</eindverslag>
+                    </verslag>
+                    <verslag>
+                        <insolventienummer>F.02/00/300</insolventienummer>
+                        <rechtbank>Zeeland - West-Brabant</rechtbank>
+                        <publicatiedatumVerslag>2021-05-20T16:00:38</publicatiedatumVerslag>
+                        <kenmerk>02_zwb_00_300_F_V_00</kenmerk>
+                        <titel>Verslag: 20-05-2021</titel>
+                        <eindverslag>false</eindverslag>
+                    </verslag>
+                </beschikbareVerslagen>
+            </searchReportsSinceResult>
+        </searchReportsSinceResponse>
+    </soap:Body>
+</soap:Envelope>

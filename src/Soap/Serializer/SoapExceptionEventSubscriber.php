@@ -7,6 +7,7 @@ use DMT\Insolvency\Exception\RequestException;
 use DMT\Insolvency\Exception\NotFoundException;
 use DMT\Insolvency\Exception\ResponseException;
 use DMT\Insolvency\Exception\UnavailableException;
+use DMT\Insolvency\Soap\Response;
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use JMS\Serializer\EventDispatcher\PreDeserializeEvent;
 
@@ -43,8 +44,11 @@ class SoapExceptionEventSubscriber implements EventSubscriberInterface
      */
     public function toException(PreDeserializeEvent $event)
     {
-        $elements = $event->getData()->xpath('//*[local-name()="exceptie"]/@errorcode');
+        if (!is_a($event->getType()['name'], Response::class, true)) {
+            return;
+        }
 
+        $elements = $event->getData()->xpath('//*[local-name()="exceptie"]/@errorcode');
         if (!count($elements)) {
             return;
         }

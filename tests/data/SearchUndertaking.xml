@@ -1,0 +1,28 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+               xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+               xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+               xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+    <env:Header xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+        <wsa:Action>http://www.rechtspraak.nl/namespaces/cir01/searchUndertakingResponse</wsa:Action>
+        <wsa:MessageID>urn:uuid:97713055-7d5d-4b67-a702-3d070e2aeaff</wsa:MessageID>
+        <wsa:RelatesTo>urn:uuid:bf237ee0-ddf8-4b36-9079-c39d3c480412</wsa:RelatesTo>
+        <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+        <wsse:Security>
+            <wsu:Timestamp wsu:Id="Timestamp-827f09b6-085e-44cd-9f09-6babafa79aa2">
+                <wsu:Created>2021-05-21T13:26:58Z</wsu:Created>
+                <wsu:Expires>2021-05-21T13:31:58Z</wsu:Expires>
+            </wsu:Timestamp>
+        </wsse:Security>
+    </env:Header>
+    <soap:Body>
+        <searchUndertakingResponse xmlns="http://www.rechtspraak.nl/namespaces/cir01">
+            <searchUndertakingResult>
+                <publicatieLijst
+                        extractiedatum="2021-05-21T15:26:58.6574618+02:00"
+                        xmlns="http://www.rechtspraak.nl/namespaces/inspubber01">
+                    <publicatieKenmerk>16.ams.21.100.F.1300.1.00</publicatieKenmerk>
+                </publicatieLijst>
+            </searchUndertakingResult>
+        </searchUndertakingResponse>
+    </soap:Body>
+</soap:Envelope>

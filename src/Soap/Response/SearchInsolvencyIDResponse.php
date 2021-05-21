@@ -15,7 +15,7 @@ class SearchInsolvencyIDResponse implements Response
 {
     /**
      * @JMS\SerializedName("searchInsolvencyIDResult")
-     * @JMS\Type("DMT\Insolvency\Soap\Response\searchInsolvencyIDResult")
+     * @JMS\Type("DMT\Insolvency\Soap\Response\SearchInsolvencyIDResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
      * @var SearchInsolvencyIDResult $searchInsolvencyIDResult

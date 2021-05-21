@@ -1,0 +1,102 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+               xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+               xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+               xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+    <env:Header xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+        <wsa:Action>http://www.rechtspraak.nl/namespaces/cir01/getCaseWithReportsResponse</wsa:Action>
+        <wsa:MessageID>urn:uuid:4322b7e1-f4b9-4615-a640-3ba9b5dddc4f</wsa:MessageID>
+        <wsa:RelatesTo>urn:uuid:42712385-7ea2-43fa-b298-08145052e3a8</wsa:RelatesTo>
+        <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+        <wsse:Security>
+            <wsu:Timestamp wsu:Id="Timestamp-d0f59939-0f80-4101-8468-7933ea72fb2d">
+                <wsu:Created>2021-05-21T11:57:14Z</wsu:Created>
+                <wsu:Expires>2021-05-21T12:02:14Z</wsu:Expires>
+            </wsu:Timestamp>
+        </wsse:Security>
+    </env:Header>
+    <soap:Body>
+        <getCaseWithReportsResponse xmlns="http://www.rechtspraak.nl/namespaces/cir01">
+            <getCaseWithReportsResult>
+                <inspubWebserviceInsolvente
+                        xmlns="http://www.rechtspraak.nl/namespaces/inspubber01">
+                    <insolvente>
+                        <insolventienummer>F.16/21/150</insolventienummer>
+                        <behandelendeInstantieCode>42</behandelendeInstantieCode>
+                        <behandelendeInstantieNaam>Rechtbank Midden-Nederland</behandelendeInstantieNaam>
+                        <behandelendeVestigingCode>3265</behandelendeVestigingCode>
+                        <behandelendeVestigingNaam>Lelystad</behandelendeVestigingNaam>
+                        <isPreHGKGepubliceerd>false</isPreHGKGepubliceerd>
+                        <persoon>
+                            <rechtspersoonlijkheid>rechtspersoon</rechtspersoonlijkheid>
+                            <achternaam>Company B.V.</achternaam>
+                            <KvKNummer>99098123</KvKNummer>
+                        </persoon>
+                        <RC>mr. R. Ight</RC>
+                        <adressen>
+                            <geheimAdres>false</geheimAdres>
+                            <adres>
+                                <datumBegin>2017-03-02</datumBegin>
+                                <straat>lange straat</straat>
+                                <huisnummer>4</huisnummer>
+                                <postcode>9999XX</postcode>
+                                <plaats>Nieuw</plaats>
+                                <adresType>CORR</adresType>
+                            </adres>
+                        </adressen>
+                        <handelendOnderDeNamen>
+                            <handelendOnderDeNaam voorheen="false">
+                                <handelsnaam>Company B.V.</handelsnaam>
+                                <KvKNummer>99098123</KvKNummer>
+                                <handelsadressen>
+                                    <handelsadres>
+                                        <adresType>VEST</adresType>
+                                        <datumBegin>2017-03-02</datumBegin>
+                                        <straat>Julianastraat</straat>
+                                        <huisnummer>26</huisnummer>
+                                        <postcode>2012ES</postcode>
+                                        <plaats>Haarlem</plaats>
+                                    </handelsadres>
+                                </handelsadressen>
+                            </handelendOnderDeNaam>
+                        </handelendOnderDeNamen>
+                        <cbvers>
+                            <cbv>
+                                <datumBegin>2021-05-18</datumBegin>
+                                <titulatuur>mr</titulatuur>
+                                <voorletters>K.</voorletters>
+                                <achternaam>Oopt</achternaam>
+                                <CB>C</CB>
+                                <adres>
+                                    <datumBegin>2021-05-19</datumBegin>
+                                    <straat>Postbus</straat>
+                                    <huisnummer>999999</huisnummer>
+                                    <postcode>3508AA</postcode>
+                                    <plaats>UTRECHT</plaats>
+                                    <telefoonnummer>030-99999991</telefoonnummer>
+                                </adres>
+                            </cbv>
+                        </cbvers>
+                        <publicatiegeschiedenis>
+                            <publicatie>
+                                <publicatieDatum>2021-05-20</publicatieDatum>
+                                <publicatieKenmerk>16.mne.23.100.F.1300.1.00</publicatieKenmerk>
+                                <publicatieOmschrijving>Uitspraak faillissement op 18 mei 2021</publicatieOmschrijving>
+                                <publicatieSoortCode>1300</publicatieSoortCode>
+                                <publicerendeInstantieCode>42</publicerendeInstantieCode>
+                            </publicatie>
+                            <instroomLegacy>false</instroomLegacy>
+                        </publicatiegeschiedenis>
+                        <beschikbareVerslagen>
+                            <verslag>
+                                <publicatiedatumVerslag>2021-05-21T13:00:14</publicatiedatumVerslag>
+                                <kenmerk>13_mne_16_999_F_V_00</kenmerk>
+                                <titel>Verslag: 21-05-2021</titel>
+                                <eindverslag>true</eindverslag>
+                            </verslag>
+                        </beschikbareVerslagen>
+                    </insolvente>
+                </inspubWebserviceInsolvente>
+            </getCaseWithReportsResult>
+        </getCaseWithReportsResponse>
+    </soap:Body>
+</soap:Envelope>

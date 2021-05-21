@@ -3,6 +3,7 @@
 namespace DMT\Insolvency\Soap\Response;
 
 use DMT\Insolvency\Soap\Response;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class GetLastUpdateResponse

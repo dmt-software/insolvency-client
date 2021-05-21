@@ -15,7 +15,7 @@ class SearchUndertakingResponse implements Response
 {
     /**
      * @JMS\SerializedName("searchUndertakingResult")
-     * @JMS\Type("DMT\Insolvency\Soap\Response\searchUndertakingResult")
+     * @JMS\Type("DMT\Insolvency\Soap\Response\SearchUndertakingResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
      * @var SearchUndertakingResult $searchUndertakingResult
