@@ -65,4 +65,13 @@ class Verslag
      * @var bool $eindverslag
      */
     public $eindverslag;
+
+    /**
+     * @JMS\SerializedName("uri")
+     * @JMS\Type("string")
+     * @JMS\XmlAttribute()
+     *
+     * @var string $uri
+     */
+    public $uri;
 }

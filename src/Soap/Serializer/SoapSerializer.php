@@ -64,6 +64,7 @@ class SoapSerializer implements SerializerInterface
                     $dispatcher->addSubscriber(new SoapMessageEventSubscriber());
                     $dispatcher->addSubscriber(new SoapHeaderEventSubscriber($this->getSoapHeader($config)));
                     $dispatcher->addSubscriber(new SoapAddressingEventSubscriber());
+                    $dispatcher->addSubscriber(new AddIdentificationUriEventSubscriber($config));
                 }
             )
             ->build();
