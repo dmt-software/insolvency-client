@@ -8,6 +8,7 @@ use DMT\Insolvency\Http\GetReportHandler;
 use DMT\Insolvency\Http\Request\GetReport;
 use DMT\Insolvency\Http\Response\GetReportResponse;
 use DMT\Insolvency\Soap\Handler as SoapHandler;
+use DMT\Insolvency\Soap\Request;
 use DMT\Insolvency\Soap\Request as SoapRequest;
 use DMT\Insolvency\Soap\Response;
 use DMT\Insolvency\Soap\Serializer\SoapSerializer;
@@ -124,6 +125,21 @@ class ClientTest extends TestCase
             Response\SearchReportsSinceResponse::class,
             $this->client->searchReportsSince(new \DateTime('2021-05-19'))
         );
+    }
+
+    public function testProcess()
+    {
+        $this->assertInstanceOf(
+            Response\GetLastUpdateResponse::class,
+            $this->client->process(new Request\GetLastUpdate())
+        );
+    }
+
+    public function testProcessIllegalRequest()
+    {
+        $this->expectErrorMessage('Invalid request');
+
+        $this->client->process(new \stdClass());
     }
 
     public function getMockHandler(string $request)

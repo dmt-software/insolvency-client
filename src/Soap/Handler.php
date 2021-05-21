@@ -69,10 +69,6 @@ class Handler
     {
         $response = Response::class . '\\' . preg_replace('~^.*\\\\([^\\\\]+)$~', '$1', $request) . 'Response';
 
-        if (!class_exists($response)) {
-            throw new UnavailableException('Unsupported method');
-        }
-
         return $response;
     }
 }
