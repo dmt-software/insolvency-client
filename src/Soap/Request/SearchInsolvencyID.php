@@ -27,11 +27,13 @@ class SearchInsolvencyID implements Request
     public $insolvencyID;
 
     /**
+     * @Assert\Choice(callback="DMT\Insolvency\ValueList\Court::getCourtCodes")
+     *
      * @JMS\SerializedName("court")
-     * @JMS\Type("DMT\Insolvency\Soap\Request\ValueList\Court")
+     * @JMS\Type("string")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var Court $court
+     * @var string Court $court
      */
     public $court;
 }

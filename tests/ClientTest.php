@@ -75,7 +75,7 @@ class ClientTest extends TestCase
     {
         $this->assertInstanceOf(
             Response\SearchByDateResponse::class,
-            $this->client->searchByDate(new \DateTime('2021-04-12'), '42')
+            $this->client->searchByDate(new \DateTime('2021-04-12'), '41')
         );
     }
 

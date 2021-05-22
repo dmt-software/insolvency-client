@@ -3,8 +3,6 @@
 namespace DMT\Insolvency\Soap\Request;
 
 use DMT\Insolvency\Soap\Request;
-use DMT\Insolvency\Soap\Request\ValueList\Court;
-use DMT\Insolvency\Soap\Request\ValueList\PublicationType;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -29,21 +27,24 @@ class SearchByDate implements Request
 
     /**
      * @Assert\NotNull
+     * @Assert\Choice(callback="DMT\Insolvency\ValueList\Court::getCourtCodes")
      *
      * @JMS\SerializedName("court")
-     * @JMS\Type("DMT\Insolvency\Soap\Request\ValueList\Court")
+     * @JMS\Type("string")
      * @JMS\XmlElement(namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var Court $court
+     * @var string $court
      */
     public $court;
 
     /**
+     * @Assert\Choice(callback="DMT\Insolvency\ValueList\getPublicationTypes", multiple=true, max=7)
+     *
      * @JMS\SerializedName("pubType")
-     * @JMS\Type("DMT\Insolvency\Soap\Request\ValueList\PublicationType")
+     * @JMS\Type("string")
      * @JMS\XmlElement(namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var PublicationType $pubType
+     * @var string $pubType
      */
     public $pubType;
 

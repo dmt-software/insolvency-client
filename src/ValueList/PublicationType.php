@@ -1,6 +1,6 @@
 <?php
 
-namespace DMT\Insolvency\Soap\Request\ValueList;
+namespace DMT\Insolvency\ValueList;
 
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -30,29 +30,6 @@ class PublicationType
 
     /** Other insolvency publications */
     public const OTHER_PUBLICATIONS = 'Overig';
-
-    /**
-     * @Assert\Choice(callback="getPublicationTypes", multiple=true, max=7)
-     *
-     * @JMS\Type("array<string>")
-     * @JMS\XmlList(
-     *     inline=true,
-     *     entry="string"
-     * )
-     *
-     * @var array
-     */
-    public $type;
-
-    /**
-     * PublicationType constructor.
-     *
-     * @param array $type
-     */
-    public function __construct(array $type)
-    {
-        $this->type = $type;
-    }
 
     /**
      * @return array

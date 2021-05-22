@@ -15,6 +15,8 @@ use DMT\Insolvency\Soap\Request;
 use DMT\Insolvency\Soap\Request as SoapRequest;
 use DMT\Insolvency\Soap\Response;
 use DMT\Insolvency\Soap\Serializer\SoapSerializer;
+use DMT\Insolvency\ValueList\Court;
+use DMT\Insolvency\ValueList\PublicationType;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
@@ -68,16 +70,18 @@ class Client
      * Search for publications of a specific insolvency.
      *
      * @param string $insolvencyID the insolvency identification.
-     * @param string|null $court the count (number) where the inslovency is registered.
+     * @param string|null $court the count (number) where the insolvency is registered.
      *
      * @return Response|Response\SearchInsolvencyIDResponse
      * @throws Exception
+     *
+     * @see Court
      */
     public function searchInsolvencyId(string $insolvencyID, string $court = null): Response\SearchInsolvencyIDResponse
     {
         $request = new Request\SearchInsolvencyID();
         $request->insolvencyID = $insolvencyID;
-        $request->court = $court ? new Request\ValueList\Court($court) : null;
+        $request->court = $court;
 
         return $this->process($request);
     }
@@ -205,13 +209,16 @@ class Client
      *
      * @return Response|Response\SearchByDateResponse
      * @throws Exception
+     *
+     * @see Court
+     * @see PublicationType
      */
     public function searchByDate(\DateTime $date, string $court, string $pubType = null): Response\SearchByDateResponse
     {
         $request = new Request\SearchByDate();
         $request->date = $date;
-        $request->court = new Request\ValueList\Court($court);
-        $request->pubType = $pubType ? new Request\ValueList\PublicationType($pubType) : null;
+        $request->court = $court;
+        $request->pubType = $pubType;
 
         return $this->process($request);
     }
