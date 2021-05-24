@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
  * @JMS\XmlNamespace("http://www.rechtspraak.nl/namespaces/inspubber01")
  * @JMS\XmlRoot("inspubAdresCBElem", namespace="http://www.rechtspraak.nl/namespaces/inspubber01")
  */
-class InspubAdresCBElem
+class InspubAdresCBElem implements PersoonType
 {
     /**
      * @JMS\SerializedName("datumBegin")

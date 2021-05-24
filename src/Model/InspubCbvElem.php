@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
  * @JMS\XmlNamespace("http://www.rechtspraak.nl/namespaces/inspubber01")
  * @JMS\XmlRoot("inspubCbvElem", namespace="http://www.rechtspraak.nl/namespaces/inspubber01")
  */
-class InspubCbvElem
+class InspubCbvElem implements BeheerderType
 {
     /**
      * @JMS\SerializedName("datumBegin")

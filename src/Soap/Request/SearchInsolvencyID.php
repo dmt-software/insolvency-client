@@ -3,7 +3,6 @@
 namespace DMT\Insolvency\Soap\Request;
 
 use DMT\Insolvency\Soap\Request;
-use DMT\Insolvency\Soap\Request\ValueList\Court;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class SearchInsolvencyID implements Request
 {
     /**
+     * @Assert\NotNull
      * @Assert\Regex("~[F|S|R]\.(\d{2}/){0,1}\d{2}/\d{1,4}~")
      *
      * @JMS\SerializedName("insolvencyID")
@@ -27,13 +27,13 @@ class SearchInsolvencyID implements Request
     public $insolvencyID;
 
     /**
-     * @Assert\Choice(callback="DMT\Insolvency\ValueList\Court::getCourtCodes")
+     * @Assert\Choice(callback="DMT\Insolvency\Validation\Court::getListValues")
      *
      * @JMS\SerializedName("court")
      * @JMS\Type("string")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var string Court $court
+     * @var string $court
      */
     public $court;
 }

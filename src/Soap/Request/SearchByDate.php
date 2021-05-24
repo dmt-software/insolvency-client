@@ -27,7 +27,7 @@ class SearchByDate implements Request
 
     /**
      * @Assert\NotNull
-     * @Assert\Choice(callback="DMT\Insolvency\ValueList\Court::getCourtCodes")
+     * @Assert\Choice(callback="DMT\Insolvency\Validation\Court::getListValues")
      *
      * @JMS\SerializedName("court")
      * @JMS\Type("string")
@@ -38,7 +38,7 @@ class SearchByDate implements Request
     public $court;
 
     /**
-     * @Assert\Choice(callback="DMT\Insolvency\ValueList\getPublicationTypes", multiple=true, max=7)
+     * @Assert\Choice(callback="DMT\Insolvency\Validation\PublicationType::getListValues", multiple=true, max=7)
      *
      * @JMS\SerializedName("pubType")
      * @JMS\Type("string")
@@ -47,5 +47,4 @@ class SearchByDate implements Request
      * @var string $pubType
      */
     public $pubType;
-
 }

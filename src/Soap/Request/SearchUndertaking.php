@@ -24,7 +24,7 @@ class SearchUndertaking implements Request
     public $name;
 
     /**
-     * @Assert\Regex("~\d{5,8}~")
+     * @Assert\Regex("~^\d{5,8}$~")
      *
      * @JMS\SerializedName("commercialRegisterID")
      * @JMS\Type("string")

@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
  * @JMS\XmlNamespace("http://www.rechtspraak.nl/namespaces/inspubber01")
  * @JMS\XmlRoot("publicatie", namespace="http://www.rechtspraak.nl/namespaces/inspubber01")
  */
-class Publicatie
+class Publicatie implements PublicatieCode, RechtbankCode
 {
     /**
      * @JMS\SerializedName("publicatieDatum")

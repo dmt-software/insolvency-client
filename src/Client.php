@@ -15,8 +15,6 @@ use DMT\Insolvency\Soap\Request;
 use DMT\Insolvency\Soap\Request as SoapRequest;
 use DMT\Insolvency\Soap\Response;
 use DMT\Insolvency\Soap\Serializer\SoapSerializer;
-use DMT\Insolvency\ValueList\Court;
-use DMT\Insolvency\ValueList\PublicationType;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
@@ -74,8 +72,6 @@ class Client
      *
      * @return Response|Response\SearchInsolvencyIDResponse
      * @throws Exception
-     *
-     * @see Court
      */
     public function searchInsolvencyId(string $insolvencyID, string $court = null): Response\SearchInsolvencyIDResponse
     {
@@ -209,9 +205,6 @@ class Client
      *
      * @return Response|Response\SearchByDateResponse
      * @throws Exception
-     *
-     * @see Court
-     * @see PublicationType
      */
     public function searchByDate(\DateTime $date, string $court, string $pubType = null): Response\SearchByDateResponse
     {

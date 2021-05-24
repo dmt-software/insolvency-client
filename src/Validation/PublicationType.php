@@ -1,6 +1,6 @@
 <?php
 
-namespace DMT\Insolvency\ValueList;
+namespace DMT\Insolvency\Validation;
 
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -34,7 +34,7 @@ class PublicationType
     /**
      * @return array
      */
-    public static function getPublicationTypes(): array
+    public static function getListValues(): array
     {
         return [
             self::COMMENCEMENT_BANKRUPTCY,
