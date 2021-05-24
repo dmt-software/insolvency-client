@@ -38,7 +38,7 @@ class SoapDateTimeSanitizerEventSubscriberTest extends TestCase
     public function provideDateTime(): iterable
     {
         return [
-            ["1975-1-5", "Y-m-d\TH:i:sP", "1975-01-05T00:00:00+01:00"],
+            ["1975-1-5", "Y-m-d\TH:i:s", "1975-01-05T00:00:00"],
             ["1982-09-25T09:20:00+01:00", "Y-m-d", "1982-09-25"],
         ];
     }
