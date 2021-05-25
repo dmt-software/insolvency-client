@@ -18,7 +18,7 @@ class SearchRemovedSinceResponse implements Response
      * @JMS\Type("DMT\Insolvency\Soap\Response\SearchRemovedSinceResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var SearchRemovedSinceResult $searchRemovedSinceResult
+     * @var SearchRemovedSinceResult $result
      */
-    public $searchRemovedSinceResult;
+    public $result;
 }

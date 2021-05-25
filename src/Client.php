@@ -85,7 +85,7 @@ class Client
     /**
      * Search for publications for a person.
      *
-     * @param \DateTime|null $dateOfBirth the date of birth of the pserson.
+     * @param \DateTime|null $dateOfBirth the date of birth of the person.
      * @param string|null $prefix the surname prefix.
      * @param string|null $surname the surname of the person.
      * @param int|null $houseNumber the house number of the person's address.

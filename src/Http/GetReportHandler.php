@@ -39,10 +39,10 @@ class GetReportHandler
         $httpResponse = $this->httpClient->sendRequest(new HttpRequest('GET', $request->reportId, []));
 
         $response = new GetReportResponse();
-        $response->getReportResult = new GetReportResult();
-        $response->getReportResult->report = new Document();
-        $response->getReportResult->report->mime = $httpResponse->getHeaderLine('Content-Type');
-        $response->getReportResult->report->document = base64_encode($httpResponse->getBody()->getContents());
+        $response->result = new GetReportResult();
+        $response->result->report = new Document();
+        $response->result->report->mime = $httpResponse->getHeaderLine('Content-Type');
+        $response->result->report->document = base64_encode($httpResponse->getBody()->getContents());
 
         return $response;
     }

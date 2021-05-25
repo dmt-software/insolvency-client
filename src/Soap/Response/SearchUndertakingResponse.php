@@ -18,8 +18,8 @@ class SearchUndertakingResponse implements Response
      * @JMS\Type("DMT\Insolvency\Soap\Response\SearchUndertakingResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var SearchUndertakingResult $searchUndertakingResult
+     * @var SearchUndertakingResult $result
      */
-    public $searchUndertakingResult;
+    public $result;
 
 }

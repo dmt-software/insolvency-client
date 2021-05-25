@@ -18,8 +18,8 @@ class GetLastUpdateResponse implements Response
      * @JMS\Type("DMT\Insolvency\Soap\Response\GetLastUpdateResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var GetLastUpdateResult $getLastUpdateResult
+     * @var GetLastUpdateResult $result
      */
-    public $getLastUpdateResult;
+    public $result;
 
 }

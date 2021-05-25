@@ -29,9 +29,9 @@ class GetReportHandlerTest extends TestCase
         $handler = new GetReportHandler($client);
         $response = $handler->handle(new GetReport());
 
-        $this->assertSame(base64_encode('%PDF-'), $response->getReportResult->report->document);
-        $this->assertSame('base64', $response->getReportResult->report->encoding);
-        $this->assertSame('application/pdf', $response->getReportResult->report->mime);
+        $this->assertSame(base64_encode('%PDF-'), $response->result->report->document);
+        $this->assertSame('base64', $response->result->report->encoding);
+        $this->assertSame('application/pdf', $response->result->report->mime);
     }
 
     /**

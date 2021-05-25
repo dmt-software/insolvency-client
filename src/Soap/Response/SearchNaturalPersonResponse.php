@@ -18,8 +18,8 @@ class SearchNaturalPersonResponse implements Response
      * @JMS\Type("DMT\Insolvency\Soap\Response\SearchNaturalPersonResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var SearchNaturalPersonResult $searchNaturalPersonResult
+     * @var SearchNaturalPersonResult $result
      */
-    public $searchNaturalPersonResult;
+    public $result;
 
 }

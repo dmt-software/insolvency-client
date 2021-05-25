@@ -8,7 +8,7 @@ namespace DMT\Insolvency\Http\Response;
 class GetReportResponse
 {
     /**
-     * @var GetReportResult $getReportResult
+     * @var GetReportResult $result
      */
-    public $getReportResult;
+    public $result;
 }

@@ -18,8 +18,8 @@ class SearchReportsSinceResponse implements Response
      * @JMS\Type("DMT\Insolvency\Soap\Response\SearchReportsSinceResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var SearchReportsSinceResult $searchReportsSinceResult
+     * @var SearchReportsSinceResult $result
      */
-    public $searchReportsSinceResult;
+    public $result;
 
 }

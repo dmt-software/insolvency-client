@@ -32,7 +32,7 @@ class HandlerTest extends TestCase
         $response = $handler->handle(new GetLastUpdate());
 
         $this->assertInstanceOf(GetLastUpdateResponse::class, $response);
-        $this->assertEquals($expected, $response->getLastUpdateResult->lastUpdate->lastUpdateDate->format('Y-m-dP'));
+        $this->assertEquals($expected, $response->result->lastUpdate->lastUpdateDate->format('Y-m-dP'));
     }
 
     protected function getXmlResponse(string $date): string

@@ -18,8 +18,8 @@ class SearchModifiedSinceResponse implements Response
      * @JMS\Type("DMT\Insolvency\Soap\Response\SearchModifiedSinceResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var SearchModifiedSinceResult $searchModifiedSinceResult
+     * @var SearchModifiedSinceResult $result
      */
-    public $searchModifiedSinceResult;
+    public $result;
 
 }

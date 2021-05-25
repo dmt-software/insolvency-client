@@ -18,8 +18,8 @@ class GetCaseWithReportsResponse implements Response
      * @JMS\Type("DMT\Insolvency\Soap\Response\GetCaseWithReportsResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var GetCaseWithReportsResult $getCaseWithReportsResult
+     * @var GetCaseWithReportsResult $result
      */
-    public $getCaseWithReportsResult;
+    public $result;
 
 }

@@ -18,8 +18,8 @@ class SearchByDateResponse implements Response
      * @JMS\Type("DMT\Insolvency\Soap\Response\SearchByDateResult")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/cir01")
      *
-     * @var SearchByDateResult $searchByDateResult
+     * @var SearchByDateResult $result
      */
-    public $searchByDateResult;
+    public $result;
 
 }
