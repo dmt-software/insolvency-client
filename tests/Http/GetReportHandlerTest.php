@@ -26,8 +26,11 @@ class GetReportHandlerTest extends TestCase
             )
         ]);
 
+        $getReport = new GetReport();
+        $getReport->reportId = '';
+
         $handler = new GetReportHandler($client);
-        $response = $handler->handle(new GetReport());
+        $response = $handler->handle($getReport);
 
         $this->assertSame(base64_encode('%PDF-'), $response->result->report->document);
         $this->assertSame('base64', $response->result->report->encoding);
@@ -47,7 +50,10 @@ class GetReportHandlerTest extends TestCase
             )
         ]);
 
+        $getReport = new GetReport();
+        $getReport->reportId = '';
+
         $handler = new GetReportHandler($client);
-        $handler->handle(new GetReport());
+        $handler->handle($getReport);
     }
 }
