@@ -10,9 +10,9 @@
     }
   ],
   "require": {
+    "php": ">= 7.4",
     "ext-dom": "*",
     "ext-simplexml": "*",
-    "ext-soap": "*",
     "dmt-software/command-bus-validator": "^1.0",
     "dmt-software/jms-soap-serializer": "^2.1",
     "guzzlehttp/guzzle": "^7.0"

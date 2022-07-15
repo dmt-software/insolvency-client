@@ -1,5 +1,5 @@
 # Insolvency Client
-[![Build Status](https://travis-ci.com/dmt-software/insolvency-client.svg?branch=master)](https://travis-ci.com/dmt-software/insolvency-client)
+[![Build Status](https://app.travis-ci.com/dmt-software/insolvency-client.svg?branch=master)](https://app.travis-ci.com/dmt-software/insolvency-client)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dmt-software/insolvency-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dmt-software/insolvency-client/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/dmt-software/insolvency-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/dmt-software/insolvency-client/?branch=master)
 
