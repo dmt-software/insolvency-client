@@ -2,6 +2,7 @@
 
 namespace DMT\Test\Insolvency\Soap\Serializer;
 
+use DMT\Insolvency\Client;
 use DMT\Insolvency\Config;
 use DMT\Insolvency\Model\Verslag;
 use DMT\Insolvency\Soap\Serializer\AddIdentificationUriEventSubscriber;
@@ -16,7 +17,9 @@ class AddIdentificationUriEventSubscriberTest extends TestCase
      */
     public function testAddGetReportUri()
     {
-        $report = new Verslag();
+        $config = new Config(['user' => 'name', 'password' => 'pass']);
+
+        $report = new Verslag(new Client($config));
         $report->kenmerk = '12_ams_17_130_1300_01';
 
         $event = $this->getMockBuilder(ObjectEvent::class)
@@ -31,7 +34,7 @@ class AddIdentificationUriEventSubscriberTest extends TestCase
 
         $this->assertNull($report->uri);
 
-        $listener = new AddIdentificationUriEventSubscriber(new Config([]));
+        $listener = new AddIdentificationUriEventSubscriber($config);
         $listener->addGetReportUri($event);
 
         $this->assertStringContainsString($report->kenmerk, $report->uri);

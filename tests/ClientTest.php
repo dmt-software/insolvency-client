@@ -7,6 +7,8 @@ use DMT\Insolvency\Config;
 use DMT\Insolvency\Http\GetReportHandler;
 use DMT\Insolvency\Http\Request\GetReport;
 use DMT\Insolvency\Http\Response\GetReportResponse;
+use DMT\Insolvency\Model\Document;
+use DMT\Insolvency\Model\Insolvente;
 use DMT\Insolvency\Soap\Handler as SoapHandler;
 use DMT\Insolvency\Soap\Request;
 use DMT\Insolvency\Soap\Request as SoapRequest;
@@ -49,9 +51,12 @@ class ClientTest extends TestCase
 
     public function testGetCaseWithReports()
     {
+        $response = $this->client->getCaseWithReports('16.mne.23.100.F.1300.1.00');
+
+        $this->assertInstanceOf(Response\GetCaseWithReportsResponse::class, $response);
         $this->assertInstanceOf(
-            Response\GetCaseWithReportsResponse::class,
-            $this->client->getCaseWithReports('16.mne.23.100.F.1300.1.00')
+            Document::class,
+            $response->result->inspubWebserviceInsolvente->insolvente->beschikbareVerslagen->verslag[0]->report
         );
     }
 
@@ -73,42 +78,42 @@ class ClientTest extends TestCase
 
     public function testSearchByDate()
     {
-        $this->assertInstanceOf(
-            Response\SearchByDateResponse::class,
-            $this->client->searchByDate(new \DateTime('2021-04-12'), '41')
-        );
+        $response = $this->client->searchByDate(new \DateTime('2021-04-12'), '41');
+
+        $this->assertInstanceOf(Response\SearchByDateResponse::class, $response);
+        $this->assertInstanceOf(Insolvente::class, $response->result->publicatieLijst->publicaties[0]->insolvente);
     }
 
     public function testSearchInsolvencyId()
     {
-        $this->assertInstanceOf(
-            Response\SearchInsolvencyIDResponse::class,
-            $this->client->searchInsolvencyId('F.01/20/293')
-        );
+        $response = $this->client->searchInsolvencyId('F.01/20/293');
+
+        $this->assertInstanceOf(Response\SearchInsolvencyIDResponse::class, $response);
+        $this->assertInstanceOf(Insolvente::class, $response->result->publicatieLijst->publicaties[0]->insolvente);
     }
 
     public function testSearchNaturalPerson()
     {
-        $this->assertInstanceOf(
-            Response\SearchNaturalPersonResponse::class,
-            $this->client->searchNaturalPerson(new \DateTime('1970-01-01'), null, 'Do')
-        );
+        $response = $this->client->searchNaturalPerson(new \DateTime('1970-01-01'), null, 'Do');
+
+        $this->assertInstanceOf(Response\SearchNaturalPersonResponse::class, $response);
+        $this->assertInstanceOf(Insolvente::class, $response->result->publicatieLijst->publicaties[0]->insolvente);
     }
 
     public function testSearchUndertaking()
     {
-        $this->assertInstanceOf(
-            Response\SearchUndertakingResponse::class,
-            $this->client->searchUndertaking(null, '99098123')
-        );
+        $response = $this->client->searchUndertaking(null, '99098123');
+
+        $this->assertInstanceOf(Response\SearchUndertakingResponse::class, $response);
+        $this->assertInstanceOf(Insolvente::class, $response->result->publicatieLijst->publicaties[0]->insolvente);
     }
 
     public function testSearchModifiedSince()
     {
-        $this->assertInstanceOf(
-            Response\SearchModifiedSinceResponse::class,
-            $this->client->searchModifiedSince(new \DateTime('2021-05-19'))
-        );
+        $response = $this->client->searchModifiedSince(new \DateTime('2021-05-19'));
+
+        $this->assertInstanceOf(Response\SearchModifiedSinceResponse::class, $response);
+        $this->assertInstanceOf(Insolvente::class, $response->result->publicatieLijst->publicaties[0]->insolvente);
     }
 
     public function testSearchRemovedSince()
@@ -121,25 +126,10 @@ class ClientTest extends TestCase
 
     public function testSearchReportsSince()
     {
-        $this->assertInstanceOf(
-            Response\SearchReportsSinceResponse::class,
-            $this->client->searchReportsSince(new \DateTime('2021-05-19'))
-        );
-    }
+        $response = $this->client->searchReportsSince(new \DateTime('2021-05-19'));
 
-    public function testProcess()
-    {
-        $this->assertInstanceOf(
-            Response\GetLastUpdateResponse::class,
-            $this->client->process(new Request\GetLastUpdate())
-        );
-    }
-
-    public function testProcessIllegalRequest()
-    {
-        $this->expectErrorMessage('Invalid request');
-
-        $this->client->process(new \stdClass());
+        $this->assertInstanceOf(Response\SearchReportsSinceResponse::class, $response);
+        $this->assertInstanceOf(Document::class, $response->result->beschikbareVerslagen->verslag[0]->report);
     }
 
     public function getMockHandler(string $request)
@@ -164,6 +154,7 @@ class ClientTest extends TestCase
             return new SoapHandler(
                 $httpClient,
                 new SoapSerializer(
+                    $this->client,
                     new Config(['user' => 'user', 'password' => 'pass'])
                 )
             );

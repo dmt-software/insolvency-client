@@ -50,7 +50,7 @@ class Client
     public function __construct(Config $config, SerializerInterface $serializer = null)
     {
         $this->config = $config;
-        $this->serializer = $serializer ?? new SoapSerializer($config);
+        $this->serializer = $serializer ?? new SoapSerializer($this, $config);
 
         $this->commandBus = new CommandBus([
             new LockingMiddleware(),
@@ -269,23 +269,6 @@ class Client
     }
 
     /**
-     * Process a request.
-     *
-     * @param Request|GetReport $request
-     *
-     * @return Response|GetReportResponse
-     * @throws Exception
-     */
-    public function process($request)
-    {
-        if (!$request instanceof Request && !$request instanceof GetReport) {
-            throw new \TypeError('Invalid request');
-        }
-
-        return $this->commandBus->handle($request);
-    }
-
-    /**
      * @param string $request
      * @return SoapHandler|object
      * @internal
@@ -297,6 +280,23 @@ class Client
         }
 
         return new GetReportHandler($this->getHttpClient(false));
+    }
+
+    /**
+     * Process a request.
+     *
+     * @param Request|GetReport $request
+     *
+     * @return Response|GetReportResponse
+     * @throws Exception
+     */
+    protected function process($request)
+    {
+        if (!$request instanceof Request && !$request instanceof GetReport) {
+            throw new \TypeError('Invalid request');
+        }
+
+        return $this->commandBus->handle($request);
     }
 
     /**

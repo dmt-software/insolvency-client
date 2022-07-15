@@ -12,7 +12,7 @@ This is a client for the Dutch insolvency web service from rechtspraak.nl.
 ## Usage
 
 Before using this server please visit [rechtspraak.nl](https://www.rechtspraak.nl/Registers/Paginas/Webservice-Centraal-Insolventieregister.aspx) 
-and read the [technical documentation](doc/Technische%20documentatie%20CIR-WS.pdf) (Dutch)  
+and read the [technical documentation](doc/Technische%20documentatie%20CIR-WS.pdf) (Dutch)
 
 ```php
 use DMT\Insolvency\Client;
@@ -21,11 +21,12 @@ use DMT\Insolvency\Exception\Exception;
 use DMT\Insolvency\Exception\RequestException;
 use DMT\CommandBus\Validator\ValidationException;
  
-$config = new Config([
-    'user' => '{{ username }}',
-    'password' => '{{ password }}'
-]);
-$client = new Client($config);
+$client = new Client(
+    new Config([
+        'user' => '{{ username }}',
+        'password' => '{{ password }}'
+    ])
+);
 
 try {
     $response = $client->searchUndertaking(
@@ -33,8 +34,10 @@ try {
        '{{ kvk-number }}' // chamber of commerce number
     );
 
-    foreach ($response->result->publicatieLijst->publicatieKenmerk as $publicationNumber) {
-        $case = $client->getCase($publicationNumber); // process the retrieved case
+    foreach ($response->result->publicatieLijst->publicaties as $publication) {
+        if (!in_array($publication->publicatieKenmerk, (array)$cachedPublications)) {
+            $insolvency = $publication->insolvente; // lazy loads insolvency 
+        }
     }
 } catch (RequestException $exception) {
     // user input errors

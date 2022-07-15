@@ -2,6 +2,7 @@
 
 namespace DMT\Insolvency\Model;
 
+use DMT\Insolvency\Client;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -10,8 +11,10 @@ use JMS\Serializer\Annotation as JMS;
  * @JMS\XmlNamespace("http://www.rechtspraak.nl/namespaces/inspubber01")
  * @JMS\XmlRoot("verslag", namespace="http://www.rechtspraak.nl/namespaces/inspubber01")
  */
-class Verslag
+class Verslag implements ConstructWithClientInterface
 {
+    use LazyLoadingPropertyTrait;
+
     /**
      * @JMS\SerializedName("insolventienummer")
      * @JMS\Type("string")
@@ -74,4 +77,24 @@ class Verslag
      * @var string $uri
      */
     public $uri;
+
+    /**
+     * @JMS\ReadOnlyProperty()
+     *
+     * @var Document|null $report
+     */
+    private $report;
+
+    public function __construct(Client $client)
+    {
+        $this->report = function () use ($client) {
+            if (!$this->kenmerk) {
+                return null;
+            }
+
+            $report = $client->getReport($this->kenmerk);
+
+            return $report->result->report ?? null;
+        };
+    }
 }

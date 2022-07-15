@@ -2,6 +2,7 @@
 
 namespace DMT\Test\Insolvency\Soap;
 
+use DMT\Insolvency\Client;
 use DMT\Insolvency\Config;
 use DMT\Insolvency\Soap\Handler;
 use DMT\Insolvency\Soap\Request\GetLastUpdate;
@@ -27,7 +28,8 @@ class HandlerTest extends TestCase
             )
         ]);
 
-        $handler = new Handler($client, new SoapSerializer(new Config(['user' => 'user', 'password' => 'secret123'])));
+        $config = new Config(['user' => 'user', 'password' => 'secret123']);
+        $handler = new Handler($client, new SoapSerializer(new Client($config), $config));
         /** @var GetLastUpdateResponse $response */
         $response = $handler->handle(new GetLastUpdate());
 

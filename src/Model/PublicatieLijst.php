@@ -22,10 +22,10 @@ class PublicatieLijst
     public $extractiedatum;
 
     /**
-     * @JMS\Type("array<string>")
+     * @JMS\Type("array<DMT\Insolvency\Model\PublicatieReference>")
      * @JMS\XmlList(inline=true, entry="publicatieKenmerk", namespace="http://www.rechtspraak.nl/namespaces/inspubber01")
      *
-     * @var string[] $publicatieKenmerk
+     * @var PublicatieReference[] $publicaties
      */
-    public $publicatieKenmerk;
+    public $publicaties;
 }

@@ -2,6 +2,7 @@
 
 namespace DMT\Insolvency\Soap\Serializer;
 
+use DMT\Insolvency\Client;
 use DMT\Insolvency\Config;
 use DMT\Insolvency\Soap\Authorization;
 use DMT\Insolvency\Soap\Request;
@@ -11,6 +12,7 @@ use DMT\Soap\Serializer\SoapDeserializationVisitorFactory;
 use DMT\Soap\Serializer\SoapHeaderEventSubscriber;
 use DMT\Soap\Serializer\SoapHeaderInterface;
 use DMT\Soap\Serializer\SoapMessageEventSubscriber;
+use DMT\Soap\Serializer\SoapNamespaceInterface;
 use DMT\Soap\Serializer\SoapSerializationVisitorFactory;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\EventDispatcher\EventDispatcher;
@@ -37,7 +39,7 @@ class SoapSerializer implements SerializerInterface
      * @param CacheInterface|null $metadataCache
      * @param array|null $metadataDirs
      */
-    public function __construct(Config $config, CacheInterface $metadataCache = null, array $metadataDirs = null)
+    public function __construct(Client $client, Config $config, CacheInterface $metadataCache = null, array $metadataDirs = null)
     {
         $builder = new SerializerBuilder();
 
@@ -50,8 +52,9 @@ class SoapSerializer implements SerializerInterface
         }
 
         $this->serializer = $builder
-            ->setSerializationVisitor('soap', (new SoapSerializationVisitorFactory())->setSoapVersion(SOAP_1_2))
+            ->setSerializationVisitor('soap', (new SoapSerializationVisitorFactory())->setSoapVersion(SoapNamespaceInterface::SOAP_1_2))
             ->setDeserializationVisitor('soap', new SoapDeserializationVisitorFactory())
+            ->setObjectConstructor(new ClientModelInstantiator($client))
             ->configureHandlers(
                 function(HandlerRegistry $registry) {
                     $registry->registerSubscribingHandler(new SoapDateHandler());
