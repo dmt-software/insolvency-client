@@ -12,6 +12,7 @@ use DMT\Insolvency\Soap\Serializer\SoapExceptionEventSubscriber;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\EventDispatcher\PreDeserializeEvent;
 use PHPUnit\Framework\TestCase;
+use SimpleXMLElement;
 
 /**
  * Class SoapExceptionEventSubscriberTest
@@ -31,7 +32,7 @@ class SoapExceptionEventSubscriberTest extends TestCase
 
         $event = new PreDeserializeEvent(
             new DeserializationContext(),
-            new \SimpleXMLElement("<exceptie errorcode=\"{$code}\">Some message</exceptie>"),
+            new SimpleXMLElement("<exceptie errorcode=\"{$code}\">Some message</exceptie>"),
             ['name' => Response::class, 'params' => []]
         );
 

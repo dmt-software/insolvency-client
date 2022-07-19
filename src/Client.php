@@ -37,7 +37,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 /**
  * Class Client
  */
-class Client
+final class Client
 {
     private Config $config;
     private ClientInterface $client;
@@ -52,11 +52,12 @@ class Client
      * @param SoapSerializer|null $serializer
      */
     public function __construct(
-        Config $config,
-        ClientInterface $client,
+        Config                  $config,
+        ClientInterface         $client,
         RequestFactoryInterface $requestFactory,
-        SoapSerializer $serializer = null
-    ) {
+        SoapSerializer          $serializer = null
+    )
+    {
         $this->config = $config;
         $this->client = $client;
         $this->requestFactory = $requestFactory;
@@ -68,7 +69,11 @@ class Client
             new ValidationMiddleware(),
             new CommandHandlerMiddleware(
                 new ClassNameExtractor(),
-                new CallableLocator([$this, 'getHandler']),
+                new CallableLocator(
+                    function (string $request) {
+                        return $this->getHandler($request);
+                    }
+                ),
                 new HandleInflector()
             )
         ]);
@@ -109,11 +114,12 @@ class Client
      */
     public function searchNaturalPerson(
         DateTime $dateOfBirth = null,
-        string $prefix = null,
-        string $surname = null,
-        int $houseNumber = null,
-        string $postalCode = null
-    ): PublicatieLijst {
+        string   $prefix = null,
+        string   $surname = null,
+        int      $houseNumber = null,
+        string   $postalCode = null
+    ): PublicatieLijst
+    {
         $request = new Request\SearchNaturalPerson();
         $request->dateOfBirth = $dateOfBirth;
         $request->prefix = $prefix;
@@ -142,8 +148,9 @@ class Client
         string $name = null,
         string $commercialRegisterID = null,
         string $postalCode = null,
-        int $houseNumber = null
-    ): PublicatieLijst {
+        int    $houseNumber = null
+    ): PublicatieLijst
+    {
         $request = new Request\SearchUndertaking();
         $request->name = $name;
         $request->commercialRegisterID = $commercialRegisterID;
@@ -293,20 +300,6 @@ class Client
     }
 
     /**
-     * @param string $request
-     * @return SoapHandler|object
-     * @internal
-     */
-    public function getHandler(string $request)
-    {
-        if (is_a($request, SoapRequest::class, true)) {
-            return new SoapHandler($this->config, $this->getRequestHandler(), $this->requestFactory, $this->serializer);
-        }
-
-        return new GetReportHandler($this->config, $this->getRequestHandler(false), $this->requestFactory);
-    }
-
-    /**
      * Process a request.
      *
      * @param Request|GetReport $request
@@ -314,31 +307,33 @@ class Client
      * @return Response|GetReportResponse
      * @throws Exception
      */
-    protected function process($request)
+    private function process($request)
     {
-        if (!$request instanceof Request && !$request instanceof GetReport) {
-            throw new \TypeError('Invalid request');
-        }
-
         return $this->commandBus->handle($request);
     }
 
     /**
-     * Get http client.
-     *
-     * @param bool $forSoap
-     * @return HttpClient
+     * @param string $request
+     * @return SoapHandler|object
+     * @internal
      */
-    protected function getRequestHandler(bool $forSoap = true): RequestHandler
+    private function getHandler(string $request)
     {
-        $middleware = [
-            new HttpExceptionMiddleware(),
-        ];
-
-        if ($forSoap) {
-            $middleware[] = new SoapActionMiddleware();
+        $exceptionMiddleware = new HttpExceptionMiddleware();
+        if (!is_a($request, SoapRequest::class, true)) {
+            return new GetReportHandler(
+                $this->config,
+                new RequestHandler($this->client, $exceptionMiddleware),
+                $this->requestFactory
+            );
         }
 
-        return new RequestHandler($this->client, ...$middleware);
+        $soapActionMiddleware =new SoapActionMiddleware();
+        return new SoapHandler(
+            $this->config,
+            new RequestHandler($this->client, $exceptionMiddleware, $soapActionMiddleware),
+            $this->requestFactory,
+            $this->serializer
+        );
     }
 }

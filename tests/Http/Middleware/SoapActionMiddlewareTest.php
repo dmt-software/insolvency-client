@@ -13,6 +13,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
+use SimpleXMLElement;
 
 /**
  * Class SoapActionMiddlewareTest
@@ -38,7 +39,7 @@ class SoapActionMiddlewareTest extends TestCase
             ])
         );
 
-        $envelope = new \SimpleXMLElement('<soap:Envelope 
+        $envelope = new SimpleXMLElement('<soap:Envelope 
             xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"></soap:Envelope>'
         );

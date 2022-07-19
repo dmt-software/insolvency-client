@@ -12,19 +12,15 @@ use JMS\Serializer\EventDispatcher\ObjectEvent;
  */
 class AddIdentificationUriEventSubscriber implements EventSubscriberInterface
 {
-    /** @var Config $config */
-    protected $config;
+    private string $documentUri;
 
     /**
-     * AddIdentificationUriEventSubscriber constructor.
-     *
-     * @param Config $config
+     * @param string|null $documentUri
      */
-    public function __construct(Config $config)
+    public function __construct(string $documentUri)
     {
-        $this->config = $config;
+        $this->documentUri = $documentUri;
     }
-
 
     /**
      * @return array
@@ -52,7 +48,7 @@ class AddIdentificationUriEventSubscriber implements EventSubscriberInterface
         $report = $event->getObject();
 
         if ($report->kenmerk) {
-            $report->uri = $this->config->documentUri . $report->kenmerk;
+            $report->uri = $this->documentUri . $report->kenmerk;
         }
     }
 }

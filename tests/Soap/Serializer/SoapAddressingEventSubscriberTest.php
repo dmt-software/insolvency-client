@@ -4,6 +4,7 @@ namespace DMT\Test\Insolvency\Soap\Serializer;
 
 use DMT\Insolvency\Soap\Serializer\SoapAddressingEventSubscriber;
 use DMT\Soap\Serializer\SoapSerializationVisitorFactory;
+use DOMXPath;
 use JMS\Serializer\EventDispatcher\ObjectEvent;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\XmlSerializationVisitor;
@@ -20,7 +21,7 @@ class SoapAddressingEventSubscriberTest extends TestCase
     public function testAddAddressing()
     {
         $event = $this->getEvent();
-        $xpath = new \DOMXPath($event->getVisitor()->getDocument());
+        $xpath = new DOMXPath($event->getVisitor()->getDocument());
 
         $this->assertCount(0, $xpath->query('//*[local-name()="Action"]'));
         $this->assertCount(0, $xpath->query('//*[local-name()="To"]'));

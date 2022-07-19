@@ -15,6 +15,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\HttpFactory;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 class HandlerTest extends TestCase
 {
@@ -24,19 +25,22 @@ class HandlerTest extends TestCase
     public function testHandle()
     {
         $expected = (new \DateTime())->format('Y-m-dP');
-        $client = new HttpClient([
+        $httpClient = new HttpClient([
             'handler' => HandlerStack::create(
                 new MockHandler([new Response(200, ['Content-Type' => 'text/xml'], $this->getXmlResponse($expected))])
             )
         ]);
 
+        /** @var Client $client */
+        $reflection = new ReflectionClass(Client::class);
+        $client = $reflection->newInstanceWithoutConstructor();
 
         $config = new Config(['user' => 'user', 'password' => 'secret123']);
         $handler = new Handler(
             $config,
-            new RequestHandler($client),
+            new RequestHandler($httpClient),
             new HttpFactory(),
-            new SoapSerializer($this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock(), $config)
+            new SoapSerializer($client, $config)
         );
         /** @var GetLastUpdateResponse $response */
         $response = $handler->handle(new GetLastUpdate());

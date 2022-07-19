@@ -6,6 +6,7 @@ use DMT\Insolvency\Soap\Serializer\SoapDateTimeSanitizerEventSubscriber;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\EventDispatcher\PreDeserializeEvent;
 use PHPUnit\Framework\TestCase;
+use SimpleXMLElement;
 
 /**
  * Class SoapDateTimeSanitizerEventSubscriberTest
@@ -23,7 +24,7 @@ class SoapDateTimeSanitizerEventSubscriberTest extends TestCase
     {
         $event = new PreDeserializeEvent(
             new DeserializationContext(),
-            new \SimpleXMLElement("<date>{$date}</date>"),
+            new SimpleXMLElement("<date>{$date}</date>"),
             ['name' =>'DateTime', 'params' => [$format]]
         );
 
