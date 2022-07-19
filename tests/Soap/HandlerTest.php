@@ -2,6 +2,7 @@
 
 namespace DMT\Test\Insolvency\Soap;
 
+use DMT\Http\Client\RequestHandler;
 use DMT\Insolvency\Client;
 use DMT\Insolvency\Config;
 use DMT\Insolvency\Soap\Handler;
@@ -11,6 +12,7 @@ use DMT\Insolvency\Soap\Serializer\SoapSerializer;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\HttpFactory;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
@@ -28,8 +30,14 @@ class HandlerTest extends TestCase
             )
         ]);
 
+
         $config = new Config(['user' => 'user', 'password' => 'secret123']);
-        $handler = new Handler($client, new SoapSerializer(new Client($config), $config));
+        $handler = new Handler(
+            $config,
+            new RequestHandler($client),
+            new HttpFactory(),
+            new SoapSerializer($this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock(), $config)
+        );
         /** @var GetLastUpdateResponse $response */
         $response = $handler->handle(new GetLastUpdate());
 

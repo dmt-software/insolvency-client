@@ -3,8 +3,6 @@
 namespace DMT\Insolvency\Model;
 
 use DMT\Insolvency\Client;
-use DMT\Insolvency\Soap\Response\GetCaseResponse;
-use DMT\Insolvency\Soap\Response\GetCaseWithReportsResponse;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -35,9 +33,7 @@ class PublicatieReference implements ConstructWithClientInterface
     public function __construct(Client $client)
     {
         $this->insolvente = function () use ($client) {
-            $case = $client->getCaseWithReports($this->publicatieKenmerk);
-
-            return $case->result->inspubWebserviceInsolvente->insolvente;
+            return $client->getCase($this->publicatieKenmerk, true);
         };
     }
 

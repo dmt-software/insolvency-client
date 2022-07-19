@@ -2,6 +2,8 @@
 
 namespace DMT\Insolvency\Http;
 
+use DMT\Http\Client\RequestHandler;
+use DMT\Insolvency\Config;
 use DMT\Insolvency\Http\Request\GetReport;
 use DMT\Insolvency\Http\Response\GetReportResponse;
 use DMT\Insolvency\Http\Response\GetReportResult;
@@ -9,22 +11,31 @@ use DMT\Insolvency\Model\Document;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Psr7\Request as HttpRequest;
 use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 
 /**
  * Class GetReportHandler
  */
 class GetReportHandler
 {
-    /** @var HttpClient|null $httpClient */
-    protected $httpClient;
+    private Config $config;
+    private RequestHandler $requestHandler;
+    protected RequestFactoryInterface $requestFactory;
 
     /**
      * GetReportHandler constructor.
-     * @param HttpClient $httpClient
+     *
+     * @param RequestHandler $requestHandler
+     * @param Config $config
      */
-    public function __construct(HttpClient $httpClient)
-    {
-        $this->httpClient = $httpClient;
+    public function __construct(
+        Config $config,
+        RequestHandler $requestHandler,
+        RequestFactoryInterface $requestFactory
+    ) {
+        $this->config = $config;
+        $this->requestHandler = $requestHandler;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
@@ -36,7 +47,9 @@ class GetReportHandler
      */
     public function handle(GetReport $request): GetReportResponse
     {
-        $httpResponse = $this->httpClient->sendRequest(new HttpRequest('GET', $request->reportId, []));
+        $request = new HttpRequest('GET', $this->config->documentUri . $request->reportId, []);
+
+        $httpResponse = $this->requestHandler->handle($request);
 
         $response = new GetReportResponse();
         $response->result = new GetReportResult();

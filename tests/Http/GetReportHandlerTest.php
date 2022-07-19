@@ -2,12 +2,15 @@
 
 namespace DMT\Test\Insolvency\Http;
 
+use DMT\Http\Client\RequestHandler;
+use DMT\Insolvency\Config;
 use DMT\Insolvency\Http\GetReportHandler;
 use DMT\Insolvency\Http\Request\GetReport;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\HttpFactory;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
@@ -29,7 +32,11 @@ class GetReportHandlerTest extends TestCase
         $getReport = new GetReport();
         $getReport->reportId = '';
 
-        $handler = new GetReportHandler($client);
+        $handler = new GetReportHandler(
+            new Config(['user' => 'user', 'password' => 'pass']),
+            new RequestHandler($client),
+            new HttpFactory()
+        );
         $response = $handler->handle($getReport);
 
         $this->assertSame(base64_encode('%PDF-'), $response->result->report->document);
@@ -53,7 +60,11 @@ class GetReportHandlerTest extends TestCase
         $getReport = new GetReport();
         $getReport->reportId = '';
 
-        $handler = new GetReportHandler($client);
+        $handler = new GetReportHandler(
+            new Config(['user' => 'user', 'password' => 'pass']),
+            new RequestHandler($client),
+            new HttpFactory()
+        );
         $handler->handle($getReport);
     }
 }

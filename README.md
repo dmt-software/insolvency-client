@@ -20,23 +20,29 @@ use DMT\Insolvency\Config;
 use DMT\Insolvency\Exception\Exception;
 use DMT\Insolvency\Exception\RequestException;
 use DMT\CommandBus\Validator\ValidationException;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
  
 $client = new Client(
     new Config([
         'user' => '{{ username }}',
         'password' => '{{ password }}'
-    ])
+    ]),
+    /** @var ClientInterface $httpClient */
+    $httpClient,
+    /** @var RequestFactoryInterface $requestFactory */
+    $requestFactory,
 );
 
 try {
-    $response = $client->searchUndertaking(
+    $publicatieLijst = $client->searchUndertaking(
        '{{ company name }}',
        '{{ kvk-number }}' // chamber of commerce number
     );
 
-    foreach ($response->result->publicatieLijst->publicaties as $publication) {
-        if (!in_array($publication->publicatieKenmerk, (array)$cachedPublications)) {
-            $insolvency = $publication->insolvente; // lazy loads insolvency 
+    foreach ($publicatieLijst->publicaties as $publicatie) {
+        if (!in_array($publicatie->publicatieKenmerk, (array)$cachedPublications)) {
+            $insolvente = $publicatie->insolvente; // lazy loads insolvency 
         }
     }
 } catch (RequestException $exception) {

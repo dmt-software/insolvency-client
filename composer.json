@@ -14,8 +14,8 @@
     "ext-dom": "*",
     "ext-simplexml": "*",
     "dmt-software/command-bus-validator": "^1.0",
-    "dmt-software/jms-soap-serializer": "^2.1",
-    "guzzlehttp/guzzle": "^7.0"
+    "dmt-software/http-client-middleware": "^0.1.4",
+    "dmt-software/jms-soap-serializer": "^2.1"
   },
   "autoload": {
     "psr-4": {
@@ -23,11 +23,15 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.5"
+    "phpunit/phpunit": "^8.5",
+    "guzzlehttp/guzzle": "^7.0"
   },
   "autoload-dev": {
     "psr-4": {
       "DMT\\Test\\Insolvency\\": "tests/"
     }
+  },
+  "suggest": {
+    "guzzlehttp/guzzle": "as a provider for psr-18 client and psr-17 request message factory"
   }
 }

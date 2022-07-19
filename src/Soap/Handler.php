@@ -2,38 +2,41 @@
 
 namespace DMT\Insolvency\Soap;
 
+use DMT\Http\Client\RequestHandler;
+use DMT\Insolvency\Config;
 use DMT\Insolvency\Exception\Exception;
 use DMT\Insolvency\Exception\UnavailableException;
-use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Psr7\Request as HttpRequest;
 use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\Exception\Exception as SerializerException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 
 /**
  * Class Handler
  */
 class Handler
 {
-    /**
-     * @var SerializerInterface $serializer
-     */
-    protected $serializer;
+    protected RequestFactoryInterface $requestFactory;
+    private SerializerInterface $serializer;
+    private RequestHandler $requestHandler;
+    private Config $config;
 
     /**
-     * @var HttpClient $httpClient
-     */
-    protected $httpClient;
-
-    /**
-     * Handler constructor.
-     *
-     * @param HttpClient $httpClient
+     * @param Config $config
+     * @param RequestHandler $requestHandler
+     * @param RequestFactoryInterface $requestFactory
      * @param SerializerInterface $serializer
      */
-    public function __construct(HttpClient $httpClient, SerializerInterface $serializer)
-    {
-        $this->httpClient = $httpClient;
+    public function __construct(
+        Config $config,
+        RequestHandler $requestHandler,
+        RequestFactoryInterface $requestFactory,
+        SerializerInterface $serializer
+    ) {
+        $this->config = $config;
+        $this->requestHandler = $requestHandler;
+        $this->requestFactory = $requestFactory;
         $this->serializer = $serializer;
     }
 
@@ -50,10 +53,10 @@ class Handler
     {
         $responseClass = $this->getResponseClassForRequest(get_class($request));
 
-        $httpRequest = new HttpRequest('POST', '', []);
+        $httpRequest = $this->requestFactory->createRequest('POST', $this->config->endPoint);
         $httpRequest->getBody()->write($this->serializer->serialize($request, 'soap'));
 
-        $httpResponse = $this->httpClient->sendRequest($httpRequest);
+        $httpResponse = $this->requestHandler->handle($httpRequest);
 
         return $this->serializer->deserialize($httpResponse->getBody()->getContents(), $responseClass, 'soap');
     }

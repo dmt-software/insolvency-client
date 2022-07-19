@@ -2,6 +2,7 @@
 
 namespace DMT\Insolvency\Model;
 
+use DateTime;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -17,7 +18,7 @@ class LastUpdate
      * @JMS\Type("DateTime<'Y-m-dP'>")
      * @JMS\XmlElement(cdata=false, namespace="http://www.rechtspraak.nl/namespaces/updateWs")
      *
-     * @var \DateTime $lastUpdateDate
+     * @var DateTime $lastUpdateDate
      */
     public $lastUpdateDate;
 }

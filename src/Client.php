@@ -2,7 +2,9 @@
 
 namespace DMT\Insolvency;
 
+use DateTime;
 use DMT\CommandBus\Validator\ValidationMiddleware;
+use DMT\Http\Client\RequestHandler;
 use DMT\Insolvency\Exception\Exception;
 use DMT\Insolvency\Exception\ExceptionMiddleware;
 use DMT\Insolvency\Http\GetReportHandler;
@@ -10,15 +12,18 @@ use DMT\Insolvency\Http\Middleware\ExceptionMiddleware as HttpExceptionMiddlewar
 use DMT\Insolvency\Http\Middleware\SoapActionMiddleware;
 use DMT\Insolvency\Http\Request\GetReport;
 use DMT\Insolvency\Http\Response\GetReportResponse;
+use DMT\Insolvency\Model\BeschikbareVerslagen;
+use DMT\Insolvency\Model\Document;
+use DMT\Insolvency\Model\Insolvente;
+use DMT\Insolvency\Model\LastUpdate;
+use DMT\Insolvency\Model\PublicatieLijst;
+use DMT\Insolvency\Model\VerwijderdePublicatieLijst;
 use DMT\Insolvency\Soap\Handler as SoapHandler;
 use DMT\Insolvency\Soap\Request;
 use DMT\Insolvency\Soap\Request as SoapRequest;
 use DMT\Insolvency\Soap\Response;
 use DMT\Insolvency\Soap\Serializer\SoapSerializer;
 use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Handler\CurlHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
 use JMS\Serializer\SerializerInterface;
 use League\Tactician\CommandBus;
 use League\Tactician\Handler\CommandHandlerMiddleware;
@@ -26,30 +31,35 @@ use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\Locator\CallableLocator;
 use League\Tactician\Handler\MethodNameInflector\HandleInflector;
 use League\Tactician\Plugins\LockingMiddleware;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 
 /**
  * Class Client
  */
 class Client
 {
-    /** @var Config $config */
-    protected $config;
-
-    /** @var SerializerInterface|null $serializer */
-    protected $serializer;
-
-    /** @var CommandBus $commandBus */
-    protected $commandBus;
+    private Config $config;
+    private ClientInterface $client;
+    private RequestFactoryInterface $requestFactory;
+    private SerializerInterface $serializer;
+    private CommandBus $commandBus;
 
     /**
-     * Client constructor.
-     *
      * @param Config $config
-     * @param SerializerInterface|null $serializer
+     * @param ClientInterface $client
+     * @param RequestFactoryInterface $requestFactory
+     * @param SoapSerializer|null $serializer
      */
-    public function __construct(Config $config, SerializerInterface $serializer = null)
-    {
+    public function __construct(
+        Config $config,
+        ClientInterface $client,
+        RequestFactoryInterface $requestFactory,
+        SoapSerializer $serializer = null
+    ) {
         $this->config = $config;
+        $this->client = $client;
+        $this->requestFactory = $requestFactory;
         $this->serializer = $serializer ?? new SoapSerializer($this, $config);
 
         $this->commandBus = new CommandBus([
@@ -70,37 +80,40 @@ class Client
      * @param string $insolvencyID the insolvency identification.
      * @param string|null $court the count (number) where the insolvency is registered.
      *
-     * @return Response|Response\SearchInsolvencyIDResponse
+     * @return PublicatieLijst
      * @throws Exception
      */
-    public function searchInsolvencyId(string $insolvencyID, string $court = null): Response\SearchInsolvencyIDResponse
+    public function searchInsolvencyId(string $insolvencyID, string $court = null): PublicatieLijst
     {
         $request = new Request\SearchInsolvencyID();
         $request->insolvencyID = $insolvencyID;
         $request->court = $court;
 
-        return $this->process($request);
+        /** @var Response\SearchInsolvencyIDResponse $response */
+        $response = $this->process($request);
+
+        return $response->result->publicatieLijst;
     }
 
     /**
      * Search for publications for a person.
      *
-     * @param \DateTime|null $dateOfBirth the date of birth of the person.
+     * @param DateTime|null $dateOfBirth the date of birth of the person.
      * @param string|null $prefix the surname prefix.
      * @param string|null $surname the surname of the person.
      * @param int|null $houseNumber the house number of the person's address.
      * @param string|null $postalCode the postcode of the person's address.
      *
-     * @return Response|Response\SearchNaturalPersonResponse
+     * @return PublicatieLijst
      * @throws Exception
      */
     public function searchNaturalPerson(
-        \DateTime $dateOfBirth = null,
+        DateTime $dateOfBirth = null,
         string $prefix = null,
         string $surname = null,
         int $houseNumber = null,
         string $postalCode = null
-    ): Response\SearchNaturalPersonResponse {
+    ): PublicatieLijst {
         $request = new Request\SearchNaturalPerson();
         $request->dateOfBirth = $dateOfBirth;
         $request->prefix = $prefix;
@@ -108,7 +121,10 @@ class Client
         $request->houseNumber = $houseNumber;
         $request->postalCode = $postalCode;
 
-        return $this->process($request);
+        /** @var Response\SearchNaturalPersonResponse $response */
+        $response = $this->process($request);
+
+        return $response->result->publicatieLijst;
     }
 
     /**
@@ -119,7 +135,7 @@ class Client
      * @param string|null $postalCode the postcode of the undertaking's address.
      * @param int|null $houseNumber the house number of the undertaking' address.
      *
-     * @return Response|Response\SearchUndertakingResponse
+     * @return PublicatieLijst
      * @throws Exception
      */
     public function searchUndertaking(
@@ -127,46 +143,37 @@ class Client
         string $commercialRegisterID = null,
         string $postalCode = null,
         int $houseNumber = null
-    ): Response\SearchUndertakingResponse {
+    ): PublicatieLijst {
         $request = new Request\SearchUndertaking();
         $request->name = $name;
         $request->commercialRegisterID = $commercialRegisterID;
         $request->postalCode = $postalCode;
         $request->houseNumber = $houseNumber;
 
-        return $this->process($request);
+        /** @var Response\SearchUndertakingResponse $response */
+        $response = $this->process($request);
+
+        return $response->result->publicatieLijst;
     }
 
     /**
      * Get insolvency case.
      *
      * @param string $publicationNumber the publication number of the case.
+     * @param bool $includeReports set to true to include reports.
      *
-     * @return Response|Response\GetCaseResponse
+     * @return Insolvente
      * @throws Exception
      */
-    public function getCase(string $publicationNumber): Response\GetCaseResponse
+    public function getCase(string $publicationNumber, bool $includeReports = false): Insolvente
     {
-        $request = new Request\GetCase();
+        $request = $includeReports ? new Request\GetCaseWithReports() : new Request\GetCase();
         $request->publicationNumber = $publicationNumber;
 
-        return $this->process($request);
-    }
+        /** @var Response\GetCaseResponse $response */
+        $response = $this->process($request);
 
-    /**
-     * Get insolvency case with references to its reports.
-     *
-     * @param string $publicationNumber the publication number of the case.
-     *
-     * @return Response|Response\GetCaseWithReportsResponse
-     * @throws Exception
-     */
-    public function getCaseWithReports(string $publicationNumber): Response\GetCaseWithReportsResponse
-    {
-        $request = new Request\GetCaseWithReports();
-        $request->publicationNumber = $publicationNumber;
-
-        return $this->process($request);
+        return $response->result->inspubWebserviceInsolvente->insolvente;
     }
 
     /**
@@ -174,98 +181,115 @@ class Client
      *
      * @param string $reportId the report identification number.
      *
-     * @return GetReportResponse
+     * @return Document
      * @throws Exception
      */
-    public function getReport(string $reportId): GetReportResponse
+    public function getReport(string $reportId): Document
     {
         $request = new GetReport();
         $request->reportId = $reportId;
 
-        return $this->process($request);
+        /** @var GetReportResponse $response */
+        $response = $this->process($request);
+
+        return $response->result->report;
+
     }
 
     /**
      * Get the date when the latest publication is added.
      *
-     * @return Response|Response\GetLastUpdateResponse
+     * @return LastUpdate
      * @throws Exception
      */
-    public function getLastUpdate(): Response\GetLastUpdateResponse
+    public function getLastUpdate(): LastUpdate
     {
-        return $this->process(new Request\GetLastUpdate());
+        /** @var Response\GetLastUpdateResponse $response */
+        $response = $this->process(new Request\GetLastUpdate());
+
+        return $response->result->lastUpdate;
     }
 
     /**
      * Search for publications of a specific date.
      *
-     * @param \DateTime $date tne date of the publications to look up.
+     * @param DateTime $date tne date of the publications to look up.
      * @param string $court the court (number) where the publications are registered.
      * @param string|null $pubType the type of publication.
      *
-     * @return Response|Response\SearchByDateResponse
+     * @return PublicatieLijst
      * @throws Exception
      */
-    public function searchByDate(\DateTime $date, string $court, string $pubType = null): Response\SearchByDateResponse
+    public function searchByDate(DateTime $date, string $court, string $pubType = null): PublicatieLijst
     {
         $request = new Request\SearchByDate();
         $request->date = $date;
         $request->court = $court;
         $request->pubType = $pubType;
 
-        return $this->process($request);
+        /** @var Response\SearchByDateResponse $response */
+        $response = $this->process($request);
+
+        return $response->result->publicatieLijst;
     }
 
     /**
      * Search for publications of the last mutated/added insolvencies for data replication.
      *
-     * @param \DateTime $modifyDate the modified date since.
+     * @param DateTime $modifyDate the modified date since.
      *
-     * @return Response|Response\SearchModifiedSinceResponse
+     * @return PublicatieLijst
      * @throws Exception
      */
-    public function searchModifiedSince(\DateTime $modifyDate): Response\SearchModifiedSinceResponse
+    public function searchModifiedSince(DateTime $modifyDate): PublicatieLijst
     {
         $request = new Request\SearchModifiedSince();
         $request->modifyDate = $modifyDate;
 
-        return $this->process($request);
+        /** @var Response\SearchModifiedSinceResponse $response */
+        $response = $this->process($request);
+
+        return $response->result->publicatieLijst;
     }
 
     /**
      * Search for removed publications for data replication.
      *
-     * @param \DateTime $modifyDate the modified date since.
+     * @param DateTime $modifyDate the modified date since.
      *
-     * @return Response|Response\SearchRemovedSinceResponse
+     * @return VerwijderdePublicatieLijst
      * @throws Exception
      */
-    public function searchRemovedSince(\DateTime $modifyDate): Response\SearchRemovedSinceResponse
+    public function searchRemovedSince(DateTime $modifyDate): VerwijderdePublicatieLijst
     {
         $request = new Request\SearchRemovedSince();
         $request->modifyDate = $modifyDate;
 
-        return $this->process($request);
+        /** @var Response\SearchRemovedSinceResponse $response */
+        $response = $this->process($request);
+
+        return $response->result->verwijderdePublicatieLijst;
     }
 
     /**
      * Search for added and modified reposts in a given time period.
      *
-     * @param \DateTime $datetimeFrom the start date.
-     * @param \DateTime|null $datetimeTo the end date.
+     * @param DateTime $datetimeFrom the start date.
+     * @param DateTime|null $datetimeTo the end date.
      *
-     * @return Response|Response\SearchReportsSinceResponse
+     * @return BeschikbareVerslagen
      * @throws Exception
      */
-    public function searchReportsSince(
-        \DateTime $datetimeFrom,
-        \DateTime $datetimeTo = null
-    ): Response\SearchReportsSinceResponse {
+    public function searchReportsSince(DateTime $datetimeFrom, DateTime $datetimeTo = null): BeschikbareVerslagen
+    {
         $request = new Request\SearchReportsSince();
         $request->datetimeFrom = $datetimeFrom;
-        $request->datetimeTo = $datetimeTo ?? new \DateTime();
+        $request->datetimeTo = $datetimeTo ?? new DateTime();
 
-        return $this->process($request);
+        /** @var Response\SearchReportsSinceResponse $response */
+        $response = $this->process($request);
+
+        return $response->result->beschikbareVerslagen;
     }
 
     /**
@@ -276,10 +300,10 @@ class Client
     public function getHandler(string $request)
     {
         if (is_a($request, SoapRequest::class, true)) {
-            return new SoapHandler($this->getHttpClient(), $this->serializer);
+            return new SoapHandler($this->config, $this->getRequestHandler(), $this->requestFactory, $this->serializer);
         }
 
-        return new GetReportHandler($this->getHttpClient(false));
+        return new GetReportHandler($this->config, $this->getRequestHandler(false), $this->requestFactory);
     }
 
     /**
@@ -305,18 +329,16 @@ class Client
      * @param bool $forSoap
      * @return HttpClient
      */
-    protected function getHttpClient(bool $forSoap = true): HttpClient
+    protected function getRequestHandler(bool $forSoap = true): RequestHandler
     {
-        $stack = HandlerStack::create(new CurlHandler());
-        $stack->push(Middleware::mapResponse(new HttpExceptionMiddleware()));
+        $middleware = [
+            new HttpExceptionMiddleware(),
+        ];
 
         if ($forSoap) {
-            $stack->push(Middleware::mapRequest(new SoapActionMiddleware()));
+            $middleware[] = new SoapActionMiddleware();
         }
 
-        return new HttpClient([
-            'base_uri' => $forSoap ? $this->config->endPoint : $this->config->documentUri,
-            'handler' => $stack,
-        ]);
+        return new RequestHandler($this->client, ...$middleware);
     }
 }

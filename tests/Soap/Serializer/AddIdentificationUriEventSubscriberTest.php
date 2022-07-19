@@ -15,11 +15,11 @@ class AddIdentificationUriEventSubscriberTest extends TestCase
     /**
      * Test add report uri.
      */
-    public function testAddGetReportUri()
+    public function testAddGetReportUri(): void
     {
         $config = new Config(['user' => 'name', 'password' => 'pass']);
 
-        $report = new Verslag(new Client($config));
+        $report = new Verslag($this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock());
         $report->kenmerk = '12_ams_17_130_1300_01';
 
         $event = $this->getMockBuilder(ObjectEvent::class)

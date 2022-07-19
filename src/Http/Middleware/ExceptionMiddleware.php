@@ -2,23 +2,27 @@
 
 namespace DMT\Insolvency\Http\Middleware;
 
+use DMT\Http\Client\MiddlewareInterface;
+use DMT\Http\Client\RequestHandlerInterface;
 use DMT\Insolvency\Exception\AuthorizationException;
 use DMT\Insolvency\Exception\NotFoundException;
 use DMT\Insolvency\Exception\ResponseException;
 use DMT\Insolvency\Exception\UnavailableException;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class ExceptionMiddleware
  */
-class ExceptionMiddleware
+class ExceptionMiddleware implements MiddlewareInterface
 {
     /**
-     * @param ResponseInterface $response
-     * @return ResponseInterface
+     * {@inheritDoc}
      */
-    public function __invoke(ResponseInterface $response): ResponseInterface
+    public function process(RequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $response = $handler->handle($request);
+
         if ($response->getStatusCode() >= 500) {
             throw new UnavailableException($response->getReasonPhrase());
         }

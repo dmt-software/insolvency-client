@@ -91,10 +91,7 @@ class Verslag implements ConstructWithClientInterface
             if (!$this->kenmerk) {
                 return null;
             }
-
-            $report = $client->getReport($this->kenmerk);
-
-            return $report->result->report ?? null;
+            return $client->getReport($this->kenmerk);
         };
     }
 }
